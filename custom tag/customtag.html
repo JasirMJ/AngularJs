@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="ng-tags-input.min.css">
+	<link rel="stylesheet" type="text/css" href="ng-tags-input.bootstrap.min.css">
+	<style type="text/css">
+		tags-input .tags, tags-input .host{
+			height: : auto;
+		}
+	</style>
+	<title>Custome Tag using AngularJS</title>
+</head>
+<body>
+	<div class = "container" ng-app="App">
+		<div ng-controller="Controller">
+			
+		</div>
+	</div>
+	<!-- end container -->
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="ng-tags-input.min.js"></script>
+
+	<script>
+		var app = angular.module('App',['ngTagsInput']);
+		app.controller('Controller',function($scope,$http){
+			$scope.tags = [];
+		});
+	</script>
+</body>
+</html>
