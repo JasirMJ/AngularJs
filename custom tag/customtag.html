@@ -1,30 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="ng-tags-input.min.css">
-	<link rel="stylesheet" type="text/css" href="ng-tags-input.bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.2.0/ng-tags-input.bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.2.0/ng-tags-input.bootstrap.min.css">
 	<style type="text/css">
 		tags-input .tags, tags-input .host{
-			height: : auto;
+			height: auto;
+			/* display: inline; */
 		}
+	 .container-main {
+		display: flex;
+		flex:1;
+	 }
+	 .tag-list{
+		display: inline-flex;
+		list-style-type: none;
+	 }
+	 .tag-item{
+		 margin-left: 2px;
+		 margin-right: 2px;
+	 }
 	</style>
 	<title>Custome Tag using AngularJS</title>
 </head>
 <body>
+	
 	<div class = "container" ng-app="App">
 		<div ng-controller="Controller">
-			
+			<tags-input ng-model = "tags"></tags-input>	
+
+			<button ng-click="getTags()">Get tags</button>
 		</div>
 	</div>
+
+	<!-- <div class="container-main" ng-app="App">
+		<div class="tags-list"> 
+
+		</div>
+		<div class="buttons">
+
+		</div>
+	</div> -->
 	<!-- end container -->
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-	<script src="ng-tags-input.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.2.0/ng-tags-input.min.js"></script>
 
 	<script>
 		var app = angular.module('App',['ngTagsInput']);
 		app.controller('Controller',function($scope,$http){
 			$scope.tags = [];
+
+			$scope.getTags = function(){
+				console.log($scope.tags,"these are the tags ...");
+
+				//post them to database
+			} 
 		});
 	</script>
 </body>
