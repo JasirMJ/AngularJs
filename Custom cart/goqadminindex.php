@@ -448,6 +448,11 @@ cursor: pointer;
                         </td>
                     </tr>
                     <tr>
+                        <td>Featured : </td>
+                        <td><input type="checkbox" ng-model="featured" ng-change="featured()" ng-true-value="1" ng-false-value="0"> tick this box to set as featured</td>
+                    </tr>
+
+                    <tr>
                         <td colspan=2>
                             <center>
                                 <div ng-app="myTagList" ng-cloak ng-controller="buisinessctrl" class="w3-card-2 w3-margin" style="max-width:400px;">
