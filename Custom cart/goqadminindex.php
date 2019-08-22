@@ -315,6 +315,10 @@ cursor: pointer;
                         <td><input type="text" name="" ng-model="ng_name" id="hide" / ></td>
                     </tr>
                     <tr>
+                        <td>Business Name : </td>
+                        <td><input type="text" name="" ng-model="ng_name" id="hide" / ></td>
+                    </tr>
+                    <tr>
                         <td>اسم : </td>
                         <td><input type="text" name="" ng-model="ng_name_ar" id="hide" / ></td>
                     </tr>
