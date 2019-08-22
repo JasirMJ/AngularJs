@@ -2,12 +2,10 @@
 session_start();
 $act = 1;
 if (!isset($_SESSION["pk_int_user_id"])) {
-	header("Location: ../index.php");
+header("Location: ../index.php");
 }
 include 'header.php';
 ?>
-
-
 
 <!--<style> Modall
 body {font-family: Arial, Helvetica, sans-serif;}
@@ -52,152 +50,152 @@ cursor: pointer;
 }
 </style>-->
 <style>
-	.w3-card-2 {
-		box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
-	}
-	.w3-margin{
-		margin:16px!important
-	}
-	.w3-container{
-		padding: 0.01em 16px
-	}
-	.w3-container:after,
-	.w3-container:before{
-		content: "";
-		display: table;
-		clear: both
-	}
+.w3-card-2 {
+box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
+}
+.w3-margin{
+margin:16px!important
+}
+.w3-container{
+padding: 0.01em 16px
+}
+.w3-container:after,
+.w3-container:before{
+content: "";
+display: table;
+clear: both
+}
 
-	.w3-light-grey
-	{
-		color: #000!important;
-		background-color: #f1f1f1!important
-	}
-	.w3-padding-16 {
-		padding-top: 16px!important;
-		padding-bottom: 16px!important
-	}
-	.w3-ul {
-		background-color: rgb(255, 255, 255);
-		list-style-type: none;
-		padding: 0;
-		margin: 0
-	}
-	.w3-ul li {
-		padding: 8px 16px;
-		border-bottom: 1px solid #ddd
-	}
-	.w3-ul li:last-child {
-		border-bottom: none
-	}
-	.w3-right {
-		float: right!important
-	}
-	.w3-right-align {
-		text-align: right!important
-	}
-	.w3-margin-right {
-		margin-right: 16px!important
-	}
-	.w3-margin-top {
-		margin-top: 16px!important
-	}
+.w3-light-grey
+{
+color: #000!important;
+background-color: #f1f1f1!important
+}
+.w3-padding-16 {
+padding-top: 16px!important;
+padding-bottom: 16px!important
+}
+.w3-ul {
+background-color: rgb(255, 255, 255);
+list-style-type: none;
+padding: 0;
+margin: 0
+}
+.w3-ul li {
+padding: 8px 16px;
+border-bottom: 1px solid #ddd
+}
+.w3-ul li:last-child {
+border-bottom: none
+}
+.w3-right {
+float: right!important
+}
+.w3-right-align {
+text-align: right!important
+}
+.w3-margin-right {
+margin-right: 16px!important
+}
+.w3-margin-top {
+margin-top: 16px!important
+}
 
-	.w3-col
-	{
-		float: left;
-		width: 100%
-	}
-	.w3-col.s1 {
-		width: 8.33333%
-	}
+.w3-col
+{
+float: left;
+width: 100%
+}
+.w3-col.s1 {
+width: 8.33333%
+}
 
-	.w3-col.s2 {
-		width: 16.66666%
-	}
+.w3-col.s2 {
+width: 16.66666%
+}
 
-	.w3-col.s3 {
-		width: 24.99999%
-	}
+.w3-col.s3 {
+width: 24.99999%
+}
 
-	.w3-col.s4 {
-		width: 33.33333%
-	}
+.w3-col.s4 {
+width: 33.33333%
+}
 
-	.w3-col.s5 {
-		width: 41.66666%
-	}
+.w3-col.s5 {
+width: 41.66666%
+}
 
-	.w3-col.s6 {
-		width: 49.99999%
-	}
+.w3-col.s6 {
+width: 49.99999%
+}
 
-	.w3-col.s7 {
-		width: 58.33333%
-	}
+.w3-col.s7 {
+width: 58.33333%
+}
 
-	.w3-col.s8 {
-		width: 66.66666%
-	}
+.w3-col.s8 {
+width: 66.66666%
+}
 
-	.w3-col.s9 {
-		width: 74.99999%
-	}
+.w3-col.s9 {
+width: 74.99999%
+}
 
-	.w3-col.s10 {
-		width: 83.33333%
-	}
+.w3-col.s10 {
+width: 83.33333%
+}
 
-	.w3-col.s11 {
-		width: 91.66666%
-	}
+.w3-col.s11 {
+width: 91.66666%
+}
 
-	.w3-col.s12 {
-		width: 99.99999%
-	}
-	.w3-input {
-		padding: 8px;
-		display: block;
-		border: none;
-		border-bottom: 1px solid #ccc;
-		width: 88%
-	}
-	.w3-border {
-		border: 1px solid #ccc!important
-	}
-	.w3-padding {
-		padding: 8px 16px!important
-	}
-	.w3-btn{
-		border: none;
-		display: inline-block;
-		padding: 8px 16px;
-		vertical-align: middle;
-		overflow: hidden;
-		text-decoration: none;
-		/* color: inherit; */
-		/* background-color: inherit; */
-		background-color: rgb(204, 127, 64);
-		text-align: center;
-		cursor: pointer;
-		white-space: nowrap;
-		width: 100%;
+.w3-col.s12 {
+width: 99.99999%
+}
+.w3-input {
+padding: 8px;
+display: block;
+border: none;
+border-bottom: 1px solid #ccc;
+width: 88%
+}
+.w3-border {
+border: 1px solid #ccc!important
+}
+.w3-padding {
+padding: 8px 16px!important
+}
+.w3-btn{
+border: none;
+display: inline-block;
+padding: 8px 16px;
+vertical-align: middle;
+overflow: hidden;
+text-decoration: none;
+/* color: inherit; */
+/* background-color: inherit; */
+background-color: rgb(204, 127, 64);
+text-align: center;
+cursor: pointer;
+white-space: nowrap;
+width: 100%;
 
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none
-	}
-	.w3-green{
-		color: #fff!important;
-		background-color: rgb(216, 167, 30)!important
-	}
-	.w3-text-red,
-	.w3-hover-text-red:hover {
-		color: #f44336!important
-	}
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none
+}
+.w3-green{
+color: #fff!important;
+background-color: rgb(216, 167, 30)!important
+}
+.w3-text-red,
+.w3-hover-text-red:hover {
+color: #f44336!important
+}
 </style>
 
 <div class="container" ng-app="app_Buisiness" >
@@ -253,91 +251,68 @@ cursor: pointer;
 					<td>اسم : </td>
 					<td><span>{{current_buisiness.vchr_name_ar}}</span></td>
 				</tr>
-				<!--<tr>-->
-					<!--	<td>Pincode : </td>-->
-					<!--	<td><span>{{current_buisiness.int_pincode}}</span></td>-->
-					<!--</tr>-->
-					<!--<tr>-->
-						<!--	<td>City : </td>-->
-						<!--	<td><span>{{current_buisiness.vchr_city}}</span></td>-->
-						<!--</tr>-->
-						<!--<tr>-->
-							<!--	<td>State : </td>-->
-							<!--	<td><span>{{current_buisiness.vchr_state}}</span></td>-->
-							<!--</tr>-->
-							<!--<tr>-->
-								<!--	<td>حالة : </td>-->
-								<!--	<td><span>{{current_buisiness.vchr_state_ar}}</span></td>-->
-								<!--</tr>-->
-								<tr>
-									<td>Mobile : </td>
-									<td><span>{{current_buisiness.int_mobile}}</span></td>
-								</tr>
-								<tr>
-									<td>Alternate Mobile Number : </td>
-									<td><span>{{current_buisiness.int_alt_mobile}}</span></td>
-								</tr>
+					<td>Mobile : </td>
+					<td><span>{{current_buisiness.int_mobile}}</span></td>
+				</tr>
+				<tr>
+					<td>Alternate Mobile Number : </td>
+					<td><span>{{current_buisiness.int_alt_mobile}}</span></td>
+				</tr>
 
-								<tr>
-									<td>Email (ايميل) : </td>
-									<td><span>{{current_buisiness.vchr_email}}</span></td>
-								</tr>
-								<tr>
-									<td>Category (الفئة) : </td>
-									<td><span>{{current_buisiness.vchr_category_name}}</span></td>
-								</tr>
-								<tr>
-									<td>Location (موقعك) : </td>
-									<td><span>{{current_buisiness.vchr_location_name}}</span></td>
-								</tr>
-								<tr>
-									<td>Opening Time (وقت مفتوح) : </td>
-									<td><span>{{opening}}</span></td>
-								</tr>
-								<tr>
-									<td>Closing Time (وقت الإغلاق) : </td>
-									<td><span>{{closing}}</span></td>
-								</tr>
-								<tr>
-									<td>Web URL (رابط الموقع) : </td>
-									<td><span>{{current_buisiness.vchr_weburl}}</span></td>
-								</tr>
-								<tr>
-									<td>Youtube Video Id ( رابط الفيديو ) : </td>
-									<td><span>{{current_buisiness.vchr_video_link}}</span></td>
-								</tr>
-								<tr>
-									<td>Description : </td>
-									<td><span>{{current_buisiness.text_description}}</span></td>
-								</tr>
-								<tr>
-									<td>وصف : </td>
-									<td><span>{{current_buisiness.text_description_ar}}</span></td>
-								</tr>
-								<!--<tr>-->
-									<!--	<td>Featured :</td>-->
-									<!--	<td><span>{{current_buisiness.text_description_ar}}</span></td>-->
-									<!--</tr>-->
-									<tr>
-										<td>Tags : </td>
-										<td><span>{{current_buisiness.vchr_tag}}</span></td>
-									</tr>
-									<tr>
-										<td colspan="2" ><img ng-repeat="option in ng_img_fully" src="../apigateofqtr/upload/{{option.vchr_image_name}}" class="img-responsive img-thumbnail" width="100"></td>
+				<tr>
+					<td>Email (ايميل) : </td>
+					<td><span>{{current_buisiness.vchr_email}}</span></td>
+				</tr>
+				<tr>
+					<td>Category (الفئة) : </td>
+					<td><span>{{current_buisiness.vchr_category_name}}</span></td>
+				</tr>
+				<tr>
+					<td>Location (موقعك) : </td>
+					<td><span>{{current_buisiness.vchr_location_name}}</span></td>
+				</tr>
+				<tr>
+					<td>Opening Time (وقت مفتوح) : </td>
+					<td><span>{{opening}}</span></td>
+				</tr>
+				<tr>
+					<td>Closing Time (وقت الإغلاق) : </td>
+					<td><span>{{closing}}</span></td>
+				</tr>
+				<tr>
+					<td>Web URL (رابط الموقع) : </td>
+					<td><span>{{current_buisiness.vchr_weburl}}</span></td>
+				</tr>
+				<tr>
+					<td>Youtube Video Id ( رابط الفيديو ) : </td>
+					<td><span>{{current_buisiness.vchr_video_link}}</span></td>
+				</tr>
+				<tr>
+					<td>Description : </td>
+					<td><span>{{current_buisiness.text_description}}</span></td>
+				</tr>
+				<tr>
+					<td>وصف : </td>
+					<td><span>{{current_buisiness.text_description_ar}}</span></td>
+				</tr>
+				<tr>
+                    <td>Featured :</td>
+                    <td><span>{{current_buisiness.text_description_ar}}</span></td>
+				</tr>
+				<tr>
+					<td>Tags : </td>
+					<td><span>{{current_buisiness.vchr_tag}}</span></td>
+				</tr>
+					<tr>
+						<td colspan="2" ><img ng-repeat="option in ng_img_fully" src="../apigateofqtr/upload/{{option.vchr_image_name}}" class="img-responsive img-thumbnail" width="100"></td>
+					</tr>
+				<tr>
+					<td><button ng-click='Back()' class='btn btn-success'>BACK(رجوع)</button></td>
+				</tr>
+			</table>
+		</div>
 
-<!-- <option ng-repeat="option in ng_img_fully" value="{{option.vchr_image_name}}" 
->
-</option> -->
-</tr>
-<tr>
-	<td><button ng-click='Back()' class='btn btn-success'>BACK(رجوع)</button></td>
-</tr>
-</table>
-</div>
-
-
-
-
+<!-- ADD NEW BUSINESS -->
 <div class="table-responsive" ng-show="add">
 	<form name = "adding">
 		<table class="table table-striped">
@@ -349,158 +324,139 @@ cursor: pointer;
 				<td>اسم : </td>
 				<td><input type="text" name="" ng-model="ng_name_ar" id="hide" / ></td>
 			</tr>
-			<!--<tr>-->
-				<!--	<td>Pincode : </td>-->
-				<!--	<td><input type="number" name="" ng-model="ng_pincode" required/ ></td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--	<td>City : </td>-->
-					<!--	<td><input type="text" name="" ng-model="ng_city" required/ ></td>-->
-					<!--</tr>-->
-					<!--<tr>-->
-						<!--	<td>State : </td>-->
-						<!--	<td><input type="text" name="" ng-model="ng_state" required/ ></td>-->
-						<!--</tr>-->
-						<!--<tr>-->
-							<!--	<td>حالة : </td>-->
-							<!--	<td><input type="text" name="" ng-model="ng_state_ar" required/ ></td>-->
-							<!--</tr>-->
-							<tr>
-								<td>Mobile : </td>
-								<td><input type="number" name="" ng-model="ng_mobile" / ></td>
-							</tr>
-							<tr>
-								<td>Alternate Mobile Number : </td>
-								<td><input type="number" name="" ng-model="ng_alt_mobile"></td>
-							</tr>
-							<tr>
-								<td>Email (ايميل) : </td>
-								<td><input type="email" name="" ng-model="ng_email" / ></td>
-							</tr>
-							<tr>
-								<td>Category (الفئة) : </td>
-								<td ng-init='get_category()'>
-									<select ng-model="ng_cat" />
-									<option value="">Select Category</option>
-									<option ng-repeat="option in category" value="{{option.pk_int_category_id}}" 
-									ng-selected='option.pk_int_category_id==current_buisiness_edit.fk_int_category_id'>
-								{{option.vchr_category_name}}</option>
-							</select>
-							<select ng-model="ng_cat" />
-							<option value="">اختر الفئة</option>
-							<option ng-repeat="option in category" value="{{option.pk_int_category_id}}" ng-selected='option.pk_int_category_id==current_buisiness_edit.fk_int_category_id'>
-							{{option.vchr_category_name_ar}}</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Location (موقعك) : </td>
-					<td ng-init="get_location()">
-						<select ng-model="ng_locatn" />
+			<tr>
+				<td>Mobile : </td>
+				<td><input type="number" name="" ng-model="ng_mobile" / ></td>
+			</tr>
+			<tr>
+				<td>Alternate Mobile Number : </td>
+				<td><input type="number" name="" ng-model="ng_alt_mobile"></td>
+			</tr>
+			<tr>
+				<td>Email (ايميل) : </td>
+				<td><input type="email" name="" ng-model="ng_email" / ></td>
+			</tr>
+			<tr>
+				<td>Category (الفئة) : </td>
+				<td ng-init='get_category()'>
+					<select ng-model="ng_cat" />
+						<option value="">Select Category</option>
+						<option ng-repeat="option in category" value="{{option.pk_int_category_id}}" ng-selected='option.pk_int_category_id==current_buisiness_edit.fk_int_category_id'>{{option.vchr_category_name}}
+						</option>
+					</select>
+					<select ng-model="ng_cat" />
+						<option value="">اختر الفئة</option>
+						<option ng-repeat="option in category" value="{{option.pk_int_category_id}}" ng-selected='option.pk_int_category_id==current_buisiness_edit.fk_int_category_id'>
+						{{option.vchr_category_name_ar}}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Location (موقعك) : </td>
+				<td ng-init="get_location()">
+					<select ng-model="ng_locatn" />
 						<option value="">Select Location</option>
 						<option ng-repeat="option in location" value="{{option.pk_int_location_id}}" 
 						ng-selected='option.pk_int_location_id==current_buisiness_edit.fk_int_location_id'>
-					{{option.vchr_location_name}}</option>
-				</select>
-				<select ng-model="ng_locatn" required/>
-				<option value="">اختر موقعا</option>
-				<option ng-repeat="option in location" value="{{option.pk_int_location_id}}" 
-				ng-selected='option.pk_int_location_id==current_buisiness_edit.fk_int_location_id'>
-			{{option.vchr_location_name_ar}}</option>
-		</select>
-	</td>
-</tr>
-<tr hidden="">
-	<td>StreetView : </td>
-	<td>
-		<input type="text" id="stat" ng_model="ng_stat" disabled>
-	</td>
-</tr>
-<tr>
-	<td hidden="">Latitude (خط العرض): </td>
-	<td hidden="">
-		<input type="text" name="" id="latitude" ng-model="ng_lat" disabled/ >
+						{{option.vchr_location_name}}
+						</option>
+					</select>
+					<select ng-model="ng_locatn" required/>
+						<option value="">اختر موقعا</option>
+						<option ng-repeat="option in location" value="{{option.pk_int_location_id}}" 
+						ng-selected='option.pk_int_location_id==current_buisiness_edit.fk_int_location_id'>
+						{{option.vchr_location_name_ar}}</option>
+					</select>
+			</td>
+			</tr>
+			<tr hidden="">
+				<td>StreetView : </td>
+				<td>
+					<input type="text" id="stat" ng_model="ng_stat" disabled>
+				</td>
+			</tr>
+			<tr>
+				<td hidden="">Latitude (خط العرض): </td>
+				<td hidden="">
+					<input type="text" name="" id="latitude" ng-model="ng_lat" disabled/ >
 
-	</td>
+				</td>
 
-	<td colspan="4" >
-		<input type="text" name="" placeholder="Type Location" id="searchname"ng-model="ng_searcht"  ng-change="searcht()" style="width: 100%; " />
+				<td colspan="4" >
+					<input type="text" name="" placeholder="Type Location" id="searchname"ng-model="ng_searcht"  ng-change="searcht()" style="width: 100%; " />
 
-		<p><div id="map" style="width:100%;height:300px "></div></p>
-	</td>
+					<p><div id="map" style="width:100%;height:300px "></div></p>
+				</td>
 
-</tr>
-<tr>
-	<td hidden="">Longitude (خط الطول) : </td>
-	<td hidden="">
-		<input type="text" name="" id="longitude" ng-model="ng_log" disabled/ >
-	</td>
-</tr>
-<tr>
-	<td>Opening Time (وقت مفتوح) : </td>
-	<td><input type="time" name="" ng-model="ng_opn_time" / ></td>
-</tr>
-<tr>
-	<td>Closing Time (وقت الإغلاق) : </td>
-	<td><input type="time" name="" ng-model="ng_cls_time" id="clsingtime" / ></td>
-</tr>
-<tr>
-	<td>Web URL (رابط الموقع) : </td>
-	<td><input type="text" name="" ng-model="ng_url" / ></td>
-</tr>
+			</tr>
+			<tr>
+				<td hidden="">Longitude (خط الطول) : </td>
+				<td hidden="">
+					<input type="text" name="" id="longitude" ng-model="ng_log" disabled/ >
+				</td>
+			</tr>
+			<tr>
+				<td>Opening Time (وقت مفتوح) : </td>
+				<td><input type="time" name="" ng-model="ng_opn_time" / ></td>
+			</tr>
+			<tr>
+				<td>Closing Time (وقت الإغلاق) : </td>
+				<td><input type="time" name="" ng-model="ng_cls_time" id="clsingtime" / ></td>
+			</tr>
+			<tr>
+				<td>Web URL (رابط الموقع) : </td>
+				<td><input type="text" name="" ng-model="ng_url" / ></td>
+			</tr>
 
-<tr>
-	<td>Youtube Video Id ( رابط الفيديو ) :  </td>
+			<tr>
+				<td>Youtube Video Id ( رابط الفيديو ) :  </td>
 
-	<td><img src="./assets/img/videoIDYoutube.png" height='100' /><br><br><input type="text" name="" ng-model="ng_video" / >    </td>
-</tr>
-<tr>
-	<td>Description : </td>
-	<td><input type="text" name="" ng-model="ng_desc" / ></td>
-</tr>
-<tr>
-	<td>وصف : </td>
-	<td><input type="text" name="" ng-model="ng_desc_ar" / ></td>
-</tr>
-<tr><td>
-	Upload Special offer Pdf : <input type="checkbox" ng-checked="pdfshow" ng-click="pdfshow = !pdfshow" />
-</td>
-</tr>
-<tr ng-show="pdfshow">
-	<td>Select A Pdf File(سيليسيت صورة) : </td>
-	<td>
-		<input type="file" name="file"  accept="application/pdf" id="fileUpload1" ng-model="form.pdf" >
-	</td>
-</tr>
+				<td><img src="./assets/img/videoIDYoutube.png" height='100' /><br><br><input type="text" name="" ng-model="ng_video" / >    </td>
+			</tr>
+			<tr>
+				<td>Description : </td>
+				<td><input type="text" name="" ng-model="ng_desc" / ></td>
+			</tr>
+			<tr>
+				<td>وصف : </td>
+				<td><input type="text" name="" ng-model="ng_desc_ar" / ></td>
+			</tr>
+			<tr><td>
+				Upload Special offer Pdf : <input type="checkbox" ng-checked="pdfshow" ng-click="pdfshow = !pdfshow" />
+			</td>
+			</tr>
+			<tr ng-show="pdfshow">
+				<td>Select A Pdf File(سيليسيت صورة) : </td>
+				<td>
+					<input type="file" name="file"  accept="application/pdf" id="fileUpload1" ng-model="form.pdf" >
+				</td>
+			</tr>
 
-<tr ng-hide="add_updt_btn">
-	<td><span ng-show="add_updt_btn">Replace All</span> Image (صورة) : </td>
-	<td>
-		<input type="file" name="file" multiple="true" accept="image/jpeg,jpg,png,PNG" id="fileUpload" ng-model="form.image" onchange="angular.element(this).scope().uploadedFile(this)">
-	</td>
-</tr>
-<tr ng-show="add_updt_btn" >
-	<td>Add Image (صورة) : </td>
-	<td>
-		<input type="file" name="file" multiple="true" accept="image/jpeg,jpg,png,PNG" id="buiimg_upload" ng-model="buiimg_upload" onchange="angular.element(this).scope().edit_img_set_save(this)">
-	</td>
-</tr>	
-<tr>
-	<td>
-		(Image size must be 650px x 350px)
-	</td>
-</tr>
-<tr>
-	<td colspan=2>
-		<center>
-			<!--<div ng-app="myShoppingList" ng-controller="buisinessctrl">-->
-				<!--     <ul>-->
-					<!--       <li ng-repeat="x in products">{{x}}</li>-->
-					<!--     </ul>-->
-					<!--     <input ng-model="addMe">-->
-					<!--       <button ng-click="addItem()">Add</button>-->
-					<!--   </div>-->
+			<tr ng-hide="add_updt_btn">
+				<td><span ng-show="add_updt_btn">Replace All</span> Image (صورة) : </td>
+				<td>
+					<input type="file" name="file" multiple="true" accept="image/jpeg,jpg,png,PNG" id="fileUpload" ng-model="form.image" onchange="angular.element(this).scope().uploadedFile(this)">
+				</td>
+			</tr>
+			<tr ng-show="add_updt_btn" >
+				<td>Add Image (صورة) : </td>
+				<td>
+					<input type="file" name="file" multiple="true" accept="image/jpeg,jpg,png,PNG" id="buiimg_upload" ng-model="buiimg_upload" onchange="angular.element(this).scope().edit_img_set_save(this)">
+				</td>
+			</tr>	
+			<tr>
+				<td>
+					(Image size must be 650px x 350px)
+				</td>
+			</tr>
+			<tr>
+				<td>Featured : </td>
+				<td><input type="checkbox" ng-model="featured" ng-change="featured()" ng-true-value="1" ng-false-value="0"> tick this box to set as featured</td>
+			</tr>
 
+			<tr>
+				<td colspan=2>
+					<center>
 					<div ng-app="myTagList" ng-cloak ng-controller="buisinessctrl" class="w3-card-2 w3-margin" style="max-width:400px;">
 						<header class="w3-container w3-light-grey w3-padding-16">
 							<h3>Tag List</h3>
@@ -519,20 +475,9 @@ cursor: pointer;
 							</div>
 							<br> <br>
 							<p class="w3-text-red">{{errortext}}</p>
+							</div>
 						</div>
 					</div>
-					<!-- Trigger/Open The Modal -->
-					<!--<button id="myBtn">Open Modal</button>-->
-
-					<!-- The Modal -->
-					<!--<div id="myModal" class="modal">-->
-
-						<!-- Modal content -->
-						<!--<div class="modal-content">-->
-							<!--  <span class="close">&times;</span>-->
-							<!--  <p>Some text in the Modal..</p>-->
-							<!--</div>-->
-						</div>
 					</center>
 				</td>
 			</tr>
@@ -540,10 +485,6 @@ cursor: pointer;
 				<td colspan="2" >
 					<span  ng-repeat="option in ng_img_fully" class="upload-butn-wrapper">
 						<img src="../apigateofqtr/upload/{{option.vchr_image_name}}" class="img-responsive img-thumbnail" width="100">
-
-<!-- <button ng-click='delete_buisiness_image(option.pk_int_image_id);'><a href='#'  title='edit' style="cursor:pointer;">
-<span class='glyphicon glyphicon-edit' ></span></a></button>
-<input type="file" ng-click='edit_img_set(option.pk_int_image_id);' onchange="angular.element(this).scope().edit_img_set_save(this)" accept="image/jpeg,jpg,png,PNG" name="buiimg_upload"  id="buiimg_upload" ng-model="buiimg"> -->
 
 <button ng-click='delete_buisiness_image(option.pk_int_image_id);'><a href='#'  title='Delete'>
 	<span class='glyphicon glyphicon-remove' ></span></a>
@@ -652,69 +593,58 @@ app_Buisiness.service('Map', function($q) {
 
 	this.addMarker = function(res) {
 		if(this.marker) this.marker.setMap(null);
-		this.marker = new google.maps.Marker({
-			map: this.map,
-			position: res.geometry.location,
-			animation: google.maps.Animation.DROP,
-			draggable: true
-		});
+        this.marker = new google.maps.Marker({
+            map: this.map,
+            position: res.geometry.location,
+            animation: google.maps.Animation.DROP,
+            draggable: true
+        });
 
-		this.map.setCenter(res.geometry.location);
+        this.map.setCenter(res.geometry.location);
 
-		document.getElementById('latitude').value = res.geometry.location.lat();
-		document.getElementById('longitude').value = res.geometry.location.lng();
-		var lati =  res.geometry.location.lat();
-		var long =  res.geometry.location.lng();
-		var streetViewService = new google.maps.StreetViewService();
-		var STREETVIEW_MAX_DISTANCE = 100;
-		var latLng = new google.maps.LatLng(lati, long);
-		streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
+        document.getElementById('latitude').value = res.geometry.location.lat();
+        document.getElementById('longitude').value = res.geometry.location.lng();
+        var lati =  res.geometry.location.lat();
+        var long =  res.geometry.location.lng();
+        var streetViewService = new google.maps.StreetViewService();
+        var STREETVIEW_MAX_DISTANCE = 100;
+        var latLng = new google.maps.LatLng(lati, long);
+        streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
 
-			if (status === google.maps.StreetViewStatus.OK) {
-// ok
-console.log("ok");
-document.getElementById('stat').value = "true";
-// angular.element(document.getElementById('newPlaceCtrl')).scope().changeLanguageToarabic_ang();
-// $scope.streetview = "true";
-} else {
-	console.log("notok");
-	document.getElementById('stat').value = "false";
-// $scope.streetview = "false";
+            if (status === google.maps.StreetViewStatus.OK) {
+                console.log("ok");
+                document.getElementById('stat').value = "true";
+            } else {
+                console.log("notok");
+                document.getElementById('stat').value = "false";
+            }
+        });
 
-// no street view available in this range, or some error occurred
-}
-});
+        google.maps.event.addListener(this.marker, 'dragend', function(event) {
 
-		google.maps.event.addListener(this.marker, 'dragend', function(event) {
-
-// console.log(event.latLng.lng());
-document.getElementById('latitude').value = event.latLng.lat();
-document.getElementById('longitude').value = event.latLng.lng();
-var lati =  event.latLng.lat();
-var long =  event.latLng.lng();
-var streetViewService = new google.maps.StreetViewService();
-var STREETVIEW_MAX_DISTANCE = 100;
-var latLng = new google.maps.LatLng(lati, long);
-streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
-	if (status === google.maps.StreetViewStatus.OK) {
-// ok
-console.log("ok");
-document.getElementById('stat').value = "true";
-// $scope.streetview = "true";
-} else {
-	console.log("notok");
-	document.getElementById('stat').value = "false";
-// $scope.streetview = "false";
-
-// no street view available in this range, or some error occurred
-}
-});
-
-});
-
-
+            // console.log(event.latLng.lng());
+            document.getElementById('latitude').value = event.latLng.lat();
+            document.getElementById('longitude').value = event.latLng.lng();
+            var lati =  event.latLng.lat();
+            var long =  event.latLng.lng();
+            var streetViewService = new google.maps.StreetViewService();
+            var STREETVIEW_MAX_DISTANCE = 100;
+            var latLng = new google.maps.LatLng(lati, long);
+            streetViewService.getPanoramaByLocation(latLng, STREETVIEW_MAX_DISTANCE, function (streetViewPanoramaData, status) {
+                if (status === google.maps.StreetViewStatus.OK) {
+                // ok
+                console.log("ok");
+                document.getElementById('stat').value = "true";
+                // $scope.streetview = "true";
+                } else {
+                    console.log("notok");
+                    document.getElementById('stat').value = "false";
+                // $scope.streetview = "false";
+                // no street view available in this range, or some error occurred
+                }
+            });
+        });
 	}
-
 });
 
 
@@ -730,6 +660,12 @@ $scope.form = [];
 $scope.files = [];
 $scope.image_deleted = [];
 $scope.length_of_images = 0;
+$scope.featured=0;
+
+// $scope.featured = function(){
+//     console.log("check box value changed");
+//     console.log("Featured : "$scope.featured)
+// }
 
 // ADDING TAG
 strtag=""
@@ -738,7 +674,6 @@ if (!$scope.tag){
 // alert("tag is null")
 $scope.tag = [];
 }
-
 $scope.addItem = function () {
 	$scope.errortext = "";
 	if (!$scope.addMe) {return;}
@@ -750,14 +685,17 @@ $scope.addItem = function () {
 		$scope.errortext = "You have already added this tag.";
 	}
 	console.log($scope.tag.join('-'));
-	strtag = $scope.tag.join('-')
+    strtag = $scope.tag.join('-')
+    console.log("Featured : "$scope.featured)
 }
 $scope.removeItem = function (x) {
 	$scope.errortext = "";    
 	$scope.tag.splice(x, 1);
 	console.log($scope.tag)
-	strtag = $scope.tag.join('-')
+    strtag = $scope.tag.join('-')
+    
 }
+// ADDING TAG END
 
 $scope.pdf = [];     
 $scope.files1 = [];
@@ -770,18 +708,12 @@ $scope.buiimg_del = [];
 $scope.buiimg_len = 0;  
 
 $scope.place = {};
-// $scope.searchPlace= "thootha";
 
-$scope.initial = function(){
+    $scope.initial = function(){
 	$scope.addbtn = true;
 	$scope.view = true;
 	$scope.add = false;
 	$scope.get_Buisiness();
-// $scope.search();
-
-// 		$scope.ng_searcht = "qatar"; 
-// 		$scope.searcht();
-
 }	
 
 $scope.searcht = function() {
@@ -790,9 +722,8 @@ $scope.searcht = function() {
 		function(res) { 
 			Map.addMarker(res);
 		}
-		);
+	);
 }
-
 
 $scope.pdfshow=false;
 $scope.Back = function(){
@@ -837,11 +768,13 @@ $scope.ng_lat="";
 $scope.ng_log="";
 $scope.ng_stat="";
 $scope.tag=[];
+// $scope.featured = 0;
+
 // $scope.form.image="";
 
 }
-$scope.uploadedFile = function(element) 
-{
+
+$scope.uploadedFile = function(element) {
 	$scope.currentFile = element.files;
 // alert(element.files);
 var reader = new FileReader();
@@ -859,6 +792,7 @@ reader.onload = function(event) {
 }
 reader.readAsDataURL(element.files[0]);
 }
+
 $scope.add_Buisiness_save = function() {
 // 	if (validateYouTubeUrl($scope.ng_video) || $scope.ng_video=="") {
 	if ($scope.ng_name == "") {
@@ -937,64 +871,60 @@ var fileInput = document.getElementById('fileUpload');
 
 	else
 	{
-        console.log(strtag)
-        $http({
-            
-            method  : 'POST',
-            url     : $scope.url,
-            processData: false,
-            transformRequest: function (data) {
-                var formData = new FormData();
-                var daa={ 
-                    'name': $scope.ng_name,
-                    'namear': $scope.ng_name_ar, 
-                    'pincode': $scope.ng_pincode,
-                    'city': $scope.ng_city,
-                    'state': $scope.ng_state,
-                    'statear': $scope.ng_state_ar,
-                    'mobile': $scope.ng_mobile,
-                    'alt_mobile': $scope.ng_alt_mobile,
-                    'email': $scope.ng_email,
-                    'cat': $scope.ng_cat,
-                    'locatn': $scope.ng_locatn,
-                    'desc':$scope.ng_desc,
-                    'descar':$scope.ng_desc_ar,
-                    'opntime':$scope.ng_opn_time,
-                    'clstime':$scope.ng_cls_time,
-                    'lat':$scope.ng_lat,
-                    'log':$scope.ng_log,
-                    'weburl':$scope.ng_url,
-                    'videolink':$scope.ng_video,
-                    'stat':$scope.ng_stat,
-                    'tag':strtag,
-        };
+		console.log(strtag)
+		$http({
 
-		var str_daa = JSON.stringify(daa);
-		$scope.loading = false;
-		for(var i = 0;i < fileInput.files.length;i++){
-			formData.append("image[]", fileInput.files[i]);
-		}
-		for(var i = 0;i < fileInput1.files.length;i++){
-			formData.append("pdf[]", fileInput1.files[0]);
-		}
-		formData.append("data",str_daa);                                
-		return formData;  
-	},  
-	data : $scope.form,
-	headers: {
-		'Content-Type': undefined
+			method  : 'POST',
+			url     : $scope.url,
+			processData: false,
+			transformRequest: function (data) {
+				var formData = new FormData();
+				var daa={ 
+					'name': $scope.ng_name,
+					'namear': $scope.ng_name_ar, 
+					'pincode': $scope.ng_pincode,
+					'city': $scope.ng_city,
+					'state': $scope.ng_state,
+					'statear': $scope.ng_state_ar,
+					'mobile': $scope.ng_mobile,
+					'alt_mobile': $scope.ng_alt_mobile,
+					'email': $scope.ng_email,
+					'cat': $scope.ng_cat,
+					'locatn': $scope.ng_locatn,
+					'desc':$scope.ng_desc,
+					'descar':$scope.ng_desc_ar,
+					'opntime':$scope.ng_opn_time,
+					'clstime':$scope.ng_cls_time,
+					'lat':$scope.ng_lat,
+					'log':$scope.ng_log,
+					'weburl':$scope.ng_url,
+					'videolink':$scope.ng_video,
+					'stat':$scope.ng_stat,
+					'tag':strtag,
+				};
+
+				var str_daa = JSON.stringify(daa);
+				$scope.loading = false;
+				for(var i = 0;i < fileInput.files.length;i++){
+					formData.append("image[]", fileInput.files[i]);
+				}
+				for(var i = 0;i < fileInput1.files.length;i++){
+					formData.append("pdf[]", fileInput1.files[0]);
+				}
+				formData.append("data",str_daa);                                
+				return formData;  
+			},  
+			data : $scope.form,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).success(function(data){
+
+			$scope.initial();
+			alert(data);
+		});
+
 	}
-}).success(function(data){
-
-	$scope.initial();
-	alert(data);
-});
-
-
-// alert($scope.ng_video);
-
-
-}
 
 //   }
 //   else{
