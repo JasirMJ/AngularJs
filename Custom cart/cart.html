@@ -1,11 +1,162 @@
 <!DOCTYPE html>
 <html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+<style>
+.w3-card-2 {
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
+}
+.w3-margin{
+    margin:16px!important
+}
+.w3-container{
+	padding: 0.01em 16px
+}
+.w3-container:after,
+.w3-container:before{
+	content: "";
+	display: table;
+	clear: both
+}
+
+.w3-light-grey
+{
+	color: #000!important;
+	background-color: #f1f1f1!important
+}
+.w3-padding-16 {
+	padding-top: 16px!important;
+	padding-bottom: 16px!important
+}
+.w3-ul {
+    background-color: rgb(255, 255, 255);
+	list-style-type: none;
+	padding: 0;
+	margin: 0
+}
+.w3-ul li {
+	padding: 8px 16px;
+	border-bottom: 1px solid #ddd
+}
+.w3-ul li:last-child {
+	border-bottom: none
+}
+.w3-right {
+	float: right!important
+}
+.w3-right-align {
+	text-align: right!important
+}
+.w3-margin-right {
+	margin-right: 16px!important
+}
+.w3-margin-top {
+	margin-top: 16px!important
+}
+
+.w3-col
+{
+	float: left;
+	width: 100%
+}
+.w3-col.s1 {
+	width: 8.33333%
+}
+
+.w3-col.s2 {
+	width: 16.66666%
+}
+
+.w3-col.s3 {
+	width: 24.99999%
+}
+
+.w3-col.s4 {
+	width: 33.33333%
+}
+
+.w3-col.s5 {
+	width: 41.66666%
+}
+
+.w3-col.s6 {
+	width: 49.99999%
+}
+
+.w3-col.s7 {
+	width: 58.33333%
+}
+
+.w3-col.s8 {
+	width: 66.66666%
+}
+
+.w3-col.s9 {
+	width: 74.99999%
+}
+
+.w3-col.s10 {
+	width: 83.33333%
+}
+
+.w3-col.s11 {
+	width: 91.66666%
+}
+
+.w3-col.s12 {
+	width: 99.99999%
+}
+.w3-input {
+	padding: 8px;
+	display: block;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	width: 88%
+}
+.w3-border {
+	border: 1px solid #ccc!important
+}
+.w3-padding {
+	padding: 8px 16px!important
+}
+.w3-btn{
+	border: none;
+	display: inline-block;
+	padding: 8px 16px;
+	vertical-align: middle;
+	overflow: hidden;
+	text-decoration: none;
+	/* color: inherit; */
+    /* background-color: inherit; */
+    background-color: rgb(204, 127, 64);
+	text-align: center;
+	cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+
+    -webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none
+}
+.w3-green{
+	color: #fff!important;
+	background-color: rgb(216, 167, 30)!important
+}
+.w3-text-red,
+.w3-hover-text-red:hover {
+	color: #f44336!important
+}
+
+
+</style>
 <body>
 
 <script>
 var app = angular.module("myTagList", []); 
+var strtag="";
 app.controller("myCtrl", function($scope) {
     $scope.tag = [];
     $scope.addItem = function () {
@@ -14,6 +165,13 @@ app.controller("myCtrl", function($scope) {
         if ($scope.tag.indexOf($scope.addMe) == -1) {
             $scope.tag.push($scope.addMe);
             $scope.addMe = "";
+            console.log($scope.tag)
+            // converting array to string using (-) as separator
+            console.log($scope.tag.join('-'));
+            strtag = $scope.tag.join('-')
+            // converting String to array using (-) as separator
+            $scope.tag = strtag.split("-")
+            console.log($scope.tag); 
 
         } else {
             $scope.errortext = "The item is already in your shopping list.";
@@ -22,6 +180,8 @@ app.controller("myCtrl", function($scope) {
     $scope.removeItem = function (x) {
         $scope.errortext = "";    
         $scope.tag.splice(x, 1);
+        console.log($scope.tag)
+        strtag = $scope.tag.join('-')
     }
 });
 </script>
@@ -31,7 +191,8 @@ app.controller("myCtrl", function($scope) {
     <h3>Tag List</h3>
   </header>
   <ul class="w3-ul">
-    <li ng-repeat="x in tag" class="w3-padding-16">{{x}}<span ng-click="removeItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">×</span></li>
+    <li ng-repeat="x in tag" class="w3-padding-16">{{x}}<span ng-click="removeItem($index)"
+         style="cursor:pointer;" class="w3-right w3-margin-right">×</span></li>
   </ul>
   <div class="w3-container w3-light-grey w3-padding-16">
     <div class="w3-row w3-margin-top">
@@ -41,7 +202,7 @@ app.controller("myCtrl", function($scope) {
       <div class="w3-col s2">
         <button ng-click="addItem()" class="w3-btn w3-padding w3-green">Add</button>
       </div>
-    </div>
+    </div><br>
     <p class="w3-text-red">{{errortext}}</p>
   </div>
 </div>
