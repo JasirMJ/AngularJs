@@ -1312,16 +1312,16 @@ public function delete_business()
 
   public function delete_home()
   {
-      $user_id=123;
-      $dt = new DateTime();
-      $today= $dt->format('Y-m-d H:i:s');
-  $post_data = file_get_contents('php://input');
-  $data = json_decode($post_data);
-  $aid = $data->id;
-   $update_data = array('vchr_delete_status' => 'd','vchr_last_modified_by'=>$user_id,'vchr_last_modified_time'=>$today,
-  );
-  $this->db->where('pk_int_home_id', $aid);
-  if ($this->db->update('tbl_home_section', $update_data))
+    $user_id=123;
+    $dt = new DateTime();
+    $today= $dt->format('Y-m-d H:i:s');
+    $post_data = file_get_contents('php://input');
+    $data = json_decode($post_data);
+    $aid = $data->id;
+    $update_data = array('vchr_delete_status' => 'd','vchr_last_modified_by'=>$user_id,'vchr_last_modified_time'=>$today,
+    );
+    $this->db->where('pk_int_home_id', $aid);
+    if ($this->db->update('tbl_home_section', $update_data))
     {
       return 'Deleted Successfully';
     }
@@ -1330,7 +1330,5 @@ public function delete_business()
       return 'Failed:Failed';
     }
   }
-
-    
-
-}?>
+}
+?>
