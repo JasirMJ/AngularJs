@@ -56,7 +56,7 @@ include 'header.php';
 				</tr>
                 <tr>
 					<td>Premium :</td>
-					<td><input type="checkbox"  ng-model="ng_premium" required="" ng-checked="checkVal" ng-true-value=1 ng-false-value=0> check this box to set as premium</td>
+					<td><input type="checkbox"  ng-model="ng_premium" ng-checked="checkVal" ng-true-value=1 ng-false-value=0> check this box to set as premium</td>
 				</tr>
 				<tr>
                     <td>Image (صورة) : </td>
@@ -231,58 +231,51 @@ include 'header.php';
                      });
                     }
 
-	$scope.update_location_save = function(){
-                        $scope.loading = true;
-                        $scope.add_updt_btn = false;
-                        $scope.ng_stat=false;
-                        $scope.lat=1;
-                        $scope.lng=2;
-						$scope.url = base_url+'update_location';
-                    //     if($scope.flagcat == false) alert("please enter anathor location!");
-                    //     if ($scope.flagcat) {
-                    //     $http.post($scope.url, {'id': $scope.current_location_edit.pk_int_location_id,'cat': $scope.ng_cat
-                    //     }).then(function(response) {
-                    //         alert(JSON.stringify(response.data));
-                    //         $scope.initial();
-                    //     })
-                    // }
-                     $scope.form.image = $scope.files[0];
-                      var fileInput = document.getElementById('fileUpload');
-                      if(fileInput.files.length > 1) alert('please select only 1 pictures');
-                      else
-                      $http({
-                        method  : 'POST',
-                        url     : $scope.url,
-                        processData: false,
-                        transformRequest: function (data) {
-                            var formData = new FormData();
-                            var daa={
-                                'id': $scope.current_location_edit.pk_int_location_id,
-                                'location': $scope.ng_cat,
-                                'locationar':$scope.ng_cat_ar,
-                                'is_premium':$scope.ng_premium,
-                                'lat':$scope.lat,
-                                'lng':$scope.lng,
-                                'strtview':$scope.ng_stat
-                            };
-                            var str_daa = JSON.stringify(daa);
-                            $scope.loading = false;
+$scope.update_location_save = function(){
+    console.log("premium : ",$scope.ng_premium)
+    $scope.loading = true;
+    $scope.add_updt_btn = false;
+    $scope.ng_stat=false;
+    $scope.lat=1;
+    $scope.lng=2;
+    $scope.url = base_url+'update_location';
+    $scope.form.image = $scope.files[0];
+    var fileInput = document.getElementById('fileUpload');
+    if(fileInput.files.length > 1) alert('please select only 1 pictures');
+    else
+    $http({
+        method  : 'POST',
+        url     : $scope.url,
+        processData: false,
+        transformRequest: function (data) {
+            var formData = new FormData();
+            var daa={
+                'id': $scope.current_location_edit.pk_int_location_id,
+                'location': $scope.ng_cat,
+                'locationar':$scope.ng_cat_ar,
+                'is_premium':$scope.ng_premium,
+                'lat':$scope.lat,
+                'lng':$scope.lng,
+                'strtview':$scope.ng_stat
+            };
+            var str_daa = JSON.stringify(daa);
+            $scope.loading = false;
 
-                            for(var i = 0;i < fileInput.files.length;i++){
-                                formData.append("image[]", fileInput.files[i]);
-                            }
-                            formData.append("data",str_daa);                                
-                            return formData;  
-                        },  
-                        data : $scope.form,
-                        headers: {
-                               'Content-Type': undefined
-                        }
-                     }).success(function(data){
-                          alert(data);
-                          $scope.initial();
-                     });   
-					}				
+            for(var i = 0;i < fileInput.files.length;i++){
+                formData.append("image[]", fileInput.files[i]);
+        }
+        formData.append("data",str_daa);                                
+        return formData;  
+    },  
+    data : $scope.form,
+    headers: {
+        'Content-Type': undefined
+    }
+    }).success(function(data){
+        alert(data);
+        $scope.initial();
+    });   
+}				
 	$scope.get_location = function(){
                         $scope.url = base_url+'select_location';
                             $scope.token = "token";
@@ -307,6 +300,7 @@ include 'header.php';
                             });
     }
     $scope.current_edit = function(id){
+
     $scope.addbtn = false;
     $("#hide").hide();
 	$scope.view = false;
@@ -322,8 +316,10 @@ include 'header.php';
                         $scope.ng_id = id;
                         $scope.ng_cat = $scope.current_location_edit.vchr_location_name;
                         $scope.ng_cat_ar = $scope.current_location_edit.vchr_location_name_ar;
-                        $scope.ng_premium_x = $scope.current_location_edit.int_is_premium;
-                        $scope.checkVal=1;
+                        $scope.ng_premium = $scope.current_location_edit.int_is_premium;
+                        $scope.checkVal = $scope.ng_premium
+                        console.log("checkbox value : ",$scope.checkVal)
+                        // $scope.checkVal=1;
                     });
      }
      $scope.delete_location = function(id){
