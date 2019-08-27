@@ -293,7 +293,7 @@ cursor: pointer;
                 </tr>
                 <tr>
                     <td>Featured :</td>
-                    <td><span>{{current_buisiness.text_description_ar}}</span></td>
+                    <td><span>{{current_buisiness.int_isfeatured}}</span></td>
                 </tr>
                 <tr>
                     <td>Tags : </td>
@@ -307,13 +307,12 @@ cursor: pointer;
                 </tr>
             </table>
         </div>
+
+
+
         <div class="table-responsive" ng-show="add">
             <form name = "adding">
                 <table class="table table-striped">
-                    <tr>
-                        <td>Business Name : </td>
-                        <td><input type="text" name="" ng-model="ng_name" id="hide" / ></td>
-                    </tr>
                     <tr>
                         <td>Business Name : </td>
                         <td><input type="text" name="" ng-model="ng_name" id="hide" / ></td>
@@ -447,12 +446,13 @@ cursor: pointer;
                             (Image size must be 650px x 350px)
                         </td>
                     </tr>
-                    <tr>
-                        <td>Featured : </td>
-                        <td><input type="checkbox" ng-model="featured" ng-change="featured()" ng-true-value="1" ng-false-value="0"> tick this box to set as featured</td>
-                    </tr>
 
                     <tr>
+                        <td>Featured : </td>
+                        <!-- ng-true-value="1" ng-false-value="1" -->
+                        <td><input type="checkbox" ng-model="ng_featured" ng-true-value=1 ng-false-value=0 ng-checked="checkVal" ng-change="countfeatured()" >  tick this box to set as featured</td>
+                    </tr>
+                    
                         <td colspan=2>
                             <center>
                                 <div ng-app="myTagList" ng-cloak ng-controller="buisinessctrl" class="w3-card-2 w3-margin" style="max-width:400px;">
@@ -475,36 +475,37 @@ cursor: pointer;
                                         <p class="w3-text-red">{{errortext}}</p>
                                     </div>
                                 </div>
-        </div>
-        </center>
-        </td>
-        </tr>
-        <tr ng-show="add_updt_btn" >
-        <td colspan="2" >
-        <span  ng-repeat="option in ng_img_fully" class="upload-butn-wrapper">
-        <img src="../apigateofqtr/upload/{{option.vchr_image_name}}" class="img-responsive img-thumbnail" width="100">
-        <button ng-click='delete_buisiness_image(option.pk_int_image_id);'><a href='#'  title='Delete'>
-        <span class='glyphicon glyphicon-remove' ></span></a>
-        </button>
-        <br>
-        <br>
-        </span>
-        </td>
-        </tr>
-        <tr>
-        <td colspan="2"> 
-        <button class="btn btn-success buttonload" ng-show="loading"><i class=" fa fa-circle-o-notch fa-spin"></i>Loading</button>
-        <button ng-click='add_Buisiness_save()' ng-disabled='adding.$pending || adding.$invalid' class='btn btn-success' ng-show="add_btn">ADD(أضف)</button>
-        <button ng-click='update_Buisiness_save()' ng-disabled='adding.$pending' class='btn btn-success' ng-show="add_updt_btn" >UPDATE(تحديث)</button>&nbsp;<button ng-click='Back()' class='btn btn-success' style="">BACK(رجوع)</button></td>
-        </tr>
-        </table>
-        </form>
+                            </div>
+                            </center>
+                        </td>
+                        </tr>
+                        <tr ng-show="add_updt_btn" >
+                            <td colspan="2" >
+                            <span  ng-repeat="option in ng_img_fully" class="upload-butn-wrapper">
+                            <img src="../apigateofqtr/upload/{{option.vchr_image_name}}" class="img-responsive img-thumbnail" width="100">
+                            <button ng-click='delete_buisiness_image(option.pk_int_image_id);'><a href='#'  title='Delete'>
+                            <span class='glyphicon glyphicon-remove' ></span></a>
+                            </button>
+                            <br>
+                            <br>
+                            </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"> 
+                            <button class="btn btn-success buttonload" ng-show="loading"><i class=" fa fa-circle-o-notch fa-spin"></i>Loading</button>
+                            <button ng-click='add_Buisiness_save()' ng-disabled='adding.$pending || adding.$invalid' class='btn btn-success' ng-show="add_btn">ADD(أضف)</button>
+                            <button ng-click='update_Buisiness_save()' ng-disabled='adding.$pending' class='btn btn-success' ng-show="add_updt_btn" >UPDATE(تحديث)</button>&nbsp;<button ng-click='Back()' class='btn btn-success' style="">BACK(رجوع)</button></td>
+                        </tr>
+                </table>
+                </form>
 </div>
 </section>
 </div>
 <script src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBvdGtRvUQ3sl4l2fua0FGcZLiqjlnnyvg&libraries=places'></script>
 
 <script type="text/javascript">
+
 
 
 	function validateYouTubeUrl(url){
@@ -529,7 +530,6 @@ cursor: pointer;
 	var app = angular.module("myShoppingList", []); 
 
 	app_Buisiness.service('Map', function($q) {
-
 		this.init = function() {
 			var options = {
 				center: new google.maps.LatLng(25.158525,51.2608477),
@@ -610,375 +610,461 @@ cursor: pointer;
 	});
 
 
-	app_Buisiness.controller('buisinessctrl', function($scope, $http, $filter, $timeout,Map) {
+app_Buisiness.controller('buisinessctrl', function($scope, $http, $filter, $timeout,Map) {
 
+			$scope.addbtn = true;
+			$scope.view = true;
+			$scope.add = false;
+			$scope.form = [];       
+			$scope.files = [];
+			$scope.image_deleted = [];
+			$scope.length_of_images = 0;
+	
+	// ADDING TAG
+	strtag=""
+	if (!$scope.tag){
+		console.log("tag is null")
+		$scope.tag = [];
+	}
+
+	$scope.addItem = function () {
+		$scope.errortext = "";
+		if (!$scope.addMe) {return;}
+		if ($scope.tag.indexOf($scope.addMe) == -1) {
+			$scope.tag.push($scope.addMe);
+			$scope.addMe = "";
+			console.log($scope.tag)
+		} else {
+			$scope.errortext = "You have already added this tag.";
+		}
+		console.log($scope.tag.join('-'));
+		strtag = $scope.tag.join('-')
+		console.log($scope.ng_featured);
+		
+	}
+	$scope.removeItem = function (x) {
+		$scope.errortext = "";    
+		$scope.tag.splice(x, 1);
+		console.log($scope.tag)
+		strtag = $scope.tag.join('-')
+	}
+
+	$scope.pdf = [];     
+	$scope.files1 = [];
+	$scope.image_deleted1 = [];
+	$scope.length_of_images1 = 0; 
+
+	$scope.buiimg = [];     
+	$scope.buiimg_file = [];
+	$scope.buiimg_del = [];
+	$scope.buiimg_len = 0;  
+	$scope.ng_featured=true;
+
+	$scope.place = {};
+
+	$scope.initial = function(){
 		$scope.addbtn = true;
 		$scope.view = true;
 		$scope.add = false;
-		$scope.form = [];       
-		$scope.files = [];
-		$scope.image_deleted = [];
-		$scope.length_of_images = 0;
+		$scope.get_Buisiness();
+	}	
 
-// ADDING TAG
-strtag=""
-if (!$scope.tag){
-	console.log("tag is null")
-	$scope.tag = [];
-}
-
-$scope.addItem = function () {
-	$scope.errortext = "";
-	if (!$scope.addMe) {return;}
-	if ($scope.tag.indexOf($scope.addMe) == -1) {
-		$scope.tag.push($scope.addMe);
-		$scope.addMe = "";
-		console.log($scope.tag)
-	} else {
-		$scope.errortext = "You have already added this tag.";
-	}
-	console.log($scope.tag.join('-'));
-	strtag = $scope.tag.join('-')
-}
-$scope.removeItem = function (x) {
-	$scope.errortext = "";    
-	$scope.tag.splice(x, 1);
-	console.log($scope.tag)
-	strtag = $scope.tag.join('-')
-}
-
-$scope.pdf = [];     
-$scope.files1 = [];
-$scope.image_deleted1 = [];
-$scope.length_of_images1 = 0; 
-
-$scope.buiimg = [];     
-$scope.buiimg_file = [];
-$scope.buiimg_del = [];
-$scope.buiimg_len = 0;  
-
-$scope.place = {};
-
-$scope.initial = function(){
-	$scope.addbtn = true;
-	$scope.view = true;
-	$scope.add = false;
-	$scope.get_Buisiness();
-}	
-
-$scope.searcht = function() {
-	Map.search($scope.ng_searcht)
-	.then(
-		function(res) { 
-			Map.addMarker(res);
-		}
-		);
-}
-
-
-$scope.pdfshow=false;
-$scope.Back = function(){
-	$scope.addbtn = true;
-	$scope.view = true;
-	$scope.add = false;
-	$scope.current_view = false;
-// 		$scope.get_Buisiness();
-document.location.reload(true);
-$scope.pdfshow=false;
-}
-
-$scope.add_Buisiness = function(){
-	$scope.addbtn = false;
-	$scope.view = false;
-	$scope.add = true;
-	$scope.add_btn = true;
-	$scope.add_updt_btn = false;
-	$scope.loading = false;
-	$scope.ng_name = ""; // required
-	$scope.ng_name_ar = ""; // required
-	$scope.ng_pincode = "";
-	$scope.ng_city = "";
-	$scope.ng_state = "";
-	$scope.ng_state_ar = "";
-	$scope.ng_mobile = "";
-	$scope.ng_alt_mobile = "";// required
-	$scope.ng_email = "";
-	$scope.ng_cat= "";// required
-	$scope.ng_locatn = "";// required
-	$scope.ng_desc= "";
-	$scope.ng_desc_ar= "";
-	$scope.ng_cls_time= new Date(2019, 11, 11, 18, 00, 0); //required
-	$scope.ng_opn_time= new Date(2019, 11, 11, 08, 00, 0); //required
-	$scope.ng_url= "";
-	$scope.ng_video= "";
-	$scope.ng_lat="";
-	$scope.ng_log="";
-	$scope.ng_stat="";
-	$scope.tag=[];
-}
-
-$scope.uploadedFile = function(element) 
-{
-	$scope.currentFile = element.files;
-	var reader = new FileReader();
-	var $fileUpload = $("input[type='file']");
-	if (parseInt($fileUpload.get(0).files.length)>5)
-	{
-		$scope.form.image = [];
-		alert("You can only upload a maximum of 5 files");
-	}
-	reader.onload = function(event) {
-		$scope.image_source = event.target.result;
-		$scope.$apply(function($scope) {
-			$scope.files = element.files;
-		});
-	}
-	reader.readAsDataURL(element.files[0]);
-}
-
-$scope.add_Buisiness_save = function() {
-	if ($scope.ng_name == "") {
-		alert("Business Name must be filled out");
-		return false;
-	}
-
-	if ($scope.ng_name_ar == "") {
-		alert("Business Name in arabic must be filled out");
-		return false;
-	}
-
-	if ($scope.ng_mobile == "") {
-		alert("Mobile number must be filled out");
-		return false;
-	}
-
-	if ($scope.ng_alt_mobile == "") {
-		alert("Alternate mobile number must be filled out");
-		return false;
-	}
-	if ($scope.ng_cat == "") {
-		alert("Category must be chosen");
-		return false;
-	}
-	if ($scope.ng_locatn == "") {
-		alert("location must be chosen");
-		return false;
-	}
-	if ($scope.ng_opn_time == "") {
-		alert("Opening time must be filled out");
-		return false;
-	}
-
-	if ($scope.ng_cls_time == "") {
-		alert("Closing time must be filled out");
-		return false;
-	}
-
-	$scope.loading = true;
-	$scope.add_btn = false;
-	$scope.ng_state = "a";
-	$scope.ng_state_ar = "abc";
-	var new_hour_op = $scope.ng_opn_time.getHours();
-	var new_minute_op = $scope.ng_opn_time.getMinutes();
-	var op_time = new Date(2019, 11, 11, new_hour_op, new_minute_op);
-	console.log("op t",op_time)
-
-	var new_hour_cl = $scope.ng_cls_time.getHours();
-	var new_minute_cl = $scope.ng_cls_time.getMinutes();
-	var cl_time = new Date(2019, 11, 11, new_hour_cl, new_minute_cl);
-	console.log("cls t",cl_time)
-
-	$scope.ng_opn_time = op_time.getTime();
-	$scope.ng_cls_time = cl_time.getTime(); 
-
-	$scope.ng_pincode = 1;
-	$scope.ng_city = 2;
-	$scope.ng_stat = document.getElementById('stat').value;
-	$scope.ng_lat = document.getElementById('latitude').value;
-	$scope.ng_log = document.getElementById('longitude').value;
-
-	$scope.url = base_url+'add_Buisiness';
-
-	$scope.form.pdf = $scope.files1[0];
-
-
-
-	var fileInput1 = document.getElementById('fileUpload1');
-	$scope.form.image = $scope.files[0];
-	var fileInput = document.getElementById('fileUpload');
-	if(fileInput.files.length > 5) alert('please select only 5 pictures');
-
-	else
-	{
-		console.log(strtag)
-		$http({
-
-			method  : 'POST',
-			url     : $scope.url,
-			processData: false,
-			transformRequest: function (data) {
-				var formData = new FormData();
-				var daa={ 
-					'name': $scope.ng_name,
-					'namear': $scope.ng_name_ar, 
-					'pincode': $scope.ng_pincode,
-					'city': $scope.ng_city,
-					'state': $scope.ng_state,
-					'statear': $scope.ng_state_ar,
-					'mobile': $scope.ng_mobile,
-					'alt_mobile': $scope.ng_alt_mobile,
-					'email': $scope.ng_email,
-					'cat': $scope.ng_cat,
-					'locatn': $scope.ng_locatn,
-					'desc':$scope.ng_desc,
-					'descar':$scope.ng_desc_ar,
-					'opntime':$scope.ng_opn_time,
-					'clstime':$scope.ng_cls_time,
-					'lat':$scope.ng_lat,
-					'log':$scope.ng_log,
-					'weburl':$scope.ng_url,
-					'videolink':$scope.ng_video,
-					'stat':$scope.ng_stat,
-					'tag':strtag,
-				};
-
-				var str_daa = JSON.stringify(daa);
-				$scope.loading = false;
-				for(var i = 0;i < fileInput.files.length;i++){
-					formData.append("image[]", fileInput.files[i]);
-				}
-				for(var i = 0;i < fileInput1.files.length;i++){
-					formData.append("pdf[]", fileInput1.files[0]);
-				}
-				formData.append("data",str_daa);                                
-				return formData;  
-			},  
-			data : $scope.form,
-			headers: {
-				'Content-Type': undefined
+	$scope.searcht = function() {
+		Map.search($scope.ng_searcht)
+		.then(
+			function(res) { 
+				Map.addMarker(res);
 			}
-		}).success(function(data){
-
-			$scope.initial();
-			alert(data);
-		});
+			);
 	}
 
-}
 
-$scope.update_Buisiness_save = function(){
-	$scope.loading = true;
-	$scope.add_updt_btn = false;
-	$scope.url = base_url+'update_Buisiness';
-	var new_hour_op = $scope.ng_opn_time.getHours();
-	var new_minute_op = $scope.ng_opn_time.getMinutes();
-	var op_time = new Date(2019, 11, 11, new_hour_op, new_minute_op, 30, 0);
-	var new_hour_cl = $scope.ng_cls_time.getHours();
-	var new_minute_cl = $scope.ng_cls_time.getMinutes();
-	var cl_time = new Date(2019, 11, 11, new_hour_cl, new_minute_cl, 30, 0);
-	$scope.ng_opn_time = op_time.getTime();
-	$scope.ng_cls_time = cl_time.getTime(); 
-	$scope.ng_pincode = 1;
-	$scope.ng_city = 2;
-
-	$scope.ng_stat = document.getElementById('stat').value;
-	$scope.ng_lat = document.getElementById('latitude').value;
-	$scope.ng_log = document.getElementById('longitude').value;
-	$scope.form.pdf = $scope.files1[0];
-	var fileInput1 = document.getElementById('fileUpload1');
-	$scope.form.image = $scope.files[0];
-	var fileInput = document.getElementById('fileUpload');
-	if(fileInput.files.length > 5) alert('please select only 5 pictures');
-
-	else
-		$http({
-			method  : 'POST',
-			url     : $scope.url,
-			processData: false,
-			transformRequest: function (data) {
-				var formData = new FormData();
-				$scope.loading = false;
-				var daa={
-					'img':$scope.ng_img,
-					'pdf':$scope.ng_pdf,
-					'bid': $scope.current_buisiness_edit.pk_int_business_id,
-					'aid': $scope.current_buisiness_edit.pk_int_address_id, 
-					'name': $scope.ng_name,
-					'namear': $scope.ng_name_ar, 
-					'pincode': $scope.ng_pincode,
-					'city': $scope.ng_city,
-					'statear': $scope.ng_state_ar,
-					'state': $scope.ng_state,
-					'mobile': $scope.ng_mobile,
-					'alt_mobile': $scope.ng_alt_mobile,
-					'email': $scope.ng_email,
-					'cat': $scope.ng_cat,
-					'locatn': $scope.ng_locatn,
-					'desc':$scope.ng_desc,
-					'descar':$scope.ng_desc_ar,
-					'lat':$scope.ng_lat,
-					'log':$scope.ng_log,
-					'opntime':$scope.ng_opn_time,
-					'clstime':$scope.ng_cls_time,
-					'weburl':$scope.ng_url,
-					'videolink':$scope.ng_video,
-					'stat':$scope.ng_stat,
-					'tag':strtag,
-				};
-				var str_daa = JSON.stringify(daa);
-				for(var i = 0;i < fileInput.files.length;i++){
-					formData.append("image[]", fileInput.files[i]);
-				}
-				for(var i = 0;i < fileInput1.files.length;i++){
-					formData.append("pdf[]", fileInput1.files[0]);
-				}
-				formData.append("data",str_daa);                                
-				return formData;  
-			},  
-			data : $scope.form,
-			headers: {
-				'Content-Type': undefined
-			}
-		}).success(function(data){
-			alert(data);
-			$scope.initial();
-		});
-
-
-	}
-
-	$scope.get_Buisiness = function(){
-		$scope.url = base_url+'select_Buisiness';
+	cnt=0;
+	$scope.countfeatured = function() {
+        console.log("ads type : ",$scope.ng_featured);
+		console.log("loc id : ",$scope.ng_locatn);
+		$scope.url = base_url+'count_featured';
 		$scope.token = "token";
-		$http.post($scope.url,{'token':$scope.token}).then(function(response){
-			$scope.buisiness = response.data;
-			$scope.vchr_image_name = "dummy.jpg";
+		
+		console.log("get_Buisiness");
+		$http.post(
+			$scope.url,
+			{
+				'token':$scope.token,
+			 	'location':$scope.ng_locatn,
+			}
+			).then(function(response){
+				$scope.result = response.data;
+				console.log("cnt : ", $scope.result);
+
+				for(key in $scope.result) {
+					console.log("key : ",key);
+					var obj = $scope.result[key];
+					cnt = obj['loc_cnt'];
+					console.log("cnt : ",cnt);
+
+				}
+				// var newObj = {};
+				// angular.extend(newObj,$scope.result);
+
+				// $scope.temp = angular.fromJson($scope.data.response);
+
+				$scope.vchr_image_name = "dummy.jpg";
 		}); 
+    };
+
+	$scope.pdfshow=false;
+	$scope.Back = function(){
+		$scope.addbtn = true;
+		$scope.view = true;
+		$scope.add = false;
+		$scope.current_view = false;
+	// 		$scope.get_Buisiness();
+	document.location.reload(true);
+	$scope.pdfshow=false;
 	}
 
-	/*GET BY CATEGORY START*/
-	$scope.get_Buisiness_by_category = function(){
-		$scope.url = base_url+'select_Buisiness_by_category';
-		$scope.token = "token";
-		$http.post($scope.url,{'token':$scope.token}).then(function(response){
-// alert(JSON.stringify(response.data[0].vchr_opn_time));
-$scope.buisiness = response.data;
-$scope.vchr_image_name = "dummy.jpg";
-}); 
+	$scope.add_Buisiness = function(){
+		console.log("add_Buisiness");
+		$scope.addbtn = false;
+		$scope.view = false;
+		$scope.add = true;
+		$scope.add_btn = true;
+		$scope.add_updt_btn = false;
+		$scope.loading = false;
+		$scope.ng_name = ""; // required
+		$scope.ng_name_ar = ""; // required
+		$scope.ng_pincode = "";
+		$scope.ng_city = "";
+		$scope.ng_state = "";
+		$scope.ng_state_ar = "";
+		$scope.ng_mobile = "";
+		$scope.ng_alt_mobile = "";// required
+		$scope.ng_email = "";
+		$scope.ng_cat= "";// required
+		$scope.ng_locatn = "";// required
+		$scope.ng_desc= "";
+		$scope.ng_desc_ar= "";
+		$scope.ng_cls_time= new Date(2019, 11, 11, 18, 00, 0); //required
+		$scope.ng_opn_time= new Date(2019, 11, 11, 08, 00, 0); //required
+		$scope.ng_url= "";
+		$scope.ng_video= "";
+		$scope.ng_lat="";
+		$scope.ng_log="";
+		$scope.ng_stat="";
+		$scope.tag=[];
+		$scope.ng_featured=true;
+		$scope.isfeatured="premium";
+
 	}
-	/*GET BY CATEGORY END*/
+
+	$scope.uploadedFile = function(element) 
+	{
+		$scope.currentFile = element.files;
+		var reader = new FileReader();
+		var $fileUpload = $("input[type='file']");
+		if (parseInt($fileUpload.get(0).files.length)>5)
+		{
+			$scope.form.image = [];
+			alert("You can only upload a maximum of 5 files");
+		}
+		reader.onload = function(event) {
+			$scope.image_source = event.target.result;
+			$scope.$apply(function($scope) {
+				$scope.files = element.files;
+			});
+		}
+		reader.readAsDataURL(element.files[0]);
+	}
+
+	$scope.add_Buisiness_save = function() {
+		console.log("add_Buisiness_save");
+
+		console.log("cnt ",cnt);
+
+
+		if ($scope.ng_name == "") {
+			alert("Business Name must be filled out");
+			return false;
+		}
+
+		if ($scope.ng_name_ar == "") {
+			alert("Business Name in arabic must be filled out");
+			return false;
+		}
+
+		if ($scope.ng_mobile == "") {
+			alert("Mobile number must be filled out");
+			return false;
+		}
+
+		if ($scope.ng_alt_mobile == "") {
+			alert("Alternate mobile number must be filled out");
+			return false;
+		}
+		if ($scope.ng_cat == "") {
+			alert("Category must be chosen");
+			return false;
+		}
+		if ($scope.ng_locatn == "") {
+			alert("location must be chosen");
+			return false;
+		}
+		if ($scope.ng_opn_time == "") {
+			alert("Opening time must be filled out");
+			return false;
+		}
+
+		if ($scope.ng_cls_time == "") {
+			alert("Closing time must be filled out");
+			return false;
+		}
+		console.log("ng_featured",$scope.ng_featured)
+
+		if(cnt >= 3 && $scope.ng_featured ==1){
+			alert("Featured list full for the selected location ")
+			return false;
+		}
+		// else{
+		// 	alert(" else case : Featured list not full for current location "+cnt)
+		// 	return false;
+		// }
+		
+
+		$scope.loading = true;
+		$scope.add_btn = false;
+		$scope.ng_state = "a";
+		$scope.ng_state_ar = "abc";
+		var new_hour_op = $scope.ng_opn_time.getHours();
+		var new_minute_op = $scope.ng_opn_time.getMinutes();
+		var op_time = new Date(2019, 11, 11, new_hour_op, new_minute_op);
+		console.log("op t",op_time)
+
+		var new_hour_cl = $scope.ng_cls_time.getHours();
+		var new_minute_cl = $scope.ng_cls_time.getMinutes();
+		var cl_time = new Date(2019, 11, 11, new_hour_cl, new_minute_cl);
+		console.log("cls t",cl_time)
+
+		$scope.ng_opn_time = op_time.getTime();
+		$scope.ng_cls_time = cl_time.getTime(); 
+
+		$scope.ng_pincode = 1;
+		$scope.ng_city = 2;
+		$scope.ng_stat = document.getElementById('stat').value;
+		$scope.ng_lat = document.getElementById('latitude').value;
+		$scope.ng_log = document.getElementById('longitude').value;
+
+		$scope.url = base_url+'add_Buisiness';
+
+		$scope.form.pdf = $scope.files1[0];
+
+
+
+		var fileInput1 = document.getElementById('fileUpload1');
+		$scope.form.image = $scope.files[0];
+		var fileInput = document.getElementById('fileUpload');
+		
+		
+		if(fileInput.files.length > 5) alert('please select only 5 pictures');
+
+		else
+		{
+			console.log('featured',$scope.ng_featured)
+			$http({
+				method  : 'POST',
+				url     : $scope.url,
+				processData: false,
+				transformRequest: function (data) {
+					var formData = new FormData();
+					var daa={ 
+						'name': $scope.ng_name,
+						'namear': $scope.ng_name_ar, 
+						'pincode': $scope.ng_pincode,
+						'city': $scope.ng_city,
+						'state': $scope.ng_state,
+						'statear': $scope.ng_state_ar,
+						'mobile': $scope.ng_mobile,
+						'alt_mobile': $scope.ng_alt_mobile,
+						'email': $scope.ng_email,
+						'cat': $scope.ng_cat,
+						'locatn': $scope.ng_locatn,
+						'desc':$scope.ng_desc,
+						'descar':$scope.ng_desc_ar,
+						'opntime':$scope.ng_opn_time,
+						'clstime':$scope.ng_cls_time,
+						'lat':$scope.ng_lat,
+						'log':$scope.ng_log,
+						'weburl':$scope.ng_url,
+						'videolink':$scope.ng_video,
+						'stat':$scope.ng_stat,
+						'tag':strtag,
+						'featured':$scope.ng_featured,
+					};
+
+					var str_daa = JSON.stringify(daa);
+					$scope.loading = false;
+					for(var i = 0;i < fileInput.files.length;i++){
+						formData.append("image[]", fileInput.files[i]);
+					}
+					for(var i = 0;i < fileInput1.files.length;i++){
+						formData.append("pdf[]", fileInput1.files[0]);
+					}
+					formData.append("data",str_daa);                                
+					return formData;  
+				},  
+				data : $scope.form,
+				headers: {
+					'Content-Type': undefined
+				}
+			}).success(function(data){
+
+				$scope.initial();
+				console.log(data);
+				alert(data);
+			});
+		}
+
+	}
+
+	// $scope.get_listing_type = function(){
+	// 	var req = {
+	// 		method: 'POST',
+	// 		url: base_url+'select_location',
+	// 		headers: {'Content-Type': undefined }
+	// 	};
+	// 	$http(req).then(function(response){
+	// 	// alert(JSON.stringify(response.data));
+	// 	$scope.location = response.data;
+	// 	}); 
+	// }
+
+	$scope.update_Buisiness_save = function(){
+		console.log("update_business_save");
+
+		console.log("ng_featured",$scope.ng_featured)
+
+		if(cnt >= 3 && $scope.ng_featured ==1){
+			alert("Featured list full for the selected location ")
+			return false;
+		}
+		// else{
+		// 	alert(" else case : Featured list not full for current location "+cnt)
+		// 	return false;
+		// }
+
+
+
+		$scope.loading = true;
+		$scope.add_updt_btn = false;
+		$scope.url = base_url+'update_Buisiness';
+		var new_hour_op = $scope.ng_opn_time.getHours();
+		var new_minute_op = $scope.ng_opn_time.getMinutes();
+		// var op_time = new Date(2019, 11, 11, new_hour_op, new_minute_op, 30, 0);
+		var op_time = new Date(2019, 11, 11, new_hour_op, new_minute_op);
+		var new_hour_cl = $scope.ng_cls_time.getHours();
+		var new_minute_cl = $scope.ng_cls_time.getMinutes();
+		// var cl_time = new Date(2019, 11, 11, new_hour_cl, new_minute_cl, 30, 0);
+		var cl_time = new Date(2019, 11, 11, new_hour_cl, new_minute_cl);
+		$scope.ng_opn_time = op_time.getTime();
+		$scope.ng_cls_time = cl_time.getTime(); 
+		$scope.ng_pincode = 1;
+		$scope.ng_city = 2;
+
+		$scope.ng_stat = document.getElementById('stat').value;
+		$scope.ng_lat = document.getElementById('latitude').value;
+		$scope.ng_log = document.getElementById('longitude').value;
+		$scope.form.pdf = $scope.files1[0];
+		var fileInput1 = document.getElementById('fileUpload1');
+		$scope.form.image = $scope.files[0];
+		var fileInput = document.getElementById('fileUpload');
+		if(fileInput.files.length > 5) alert('please select only 5 pictures');
+
+		else
+			$http({
+				method  : 'POST',
+				url     : $scope.url,
+				processData: false,
+				transformRequest: function (data) {
+					var formData = new FormData();
+					$scope.loading = false;
+					var daa={
+						'img':$scope.ng_img,
+						'pdf':$scope.ng_pdf,
+						'bid': $scope.current_buisiness_edit.pk_int_business_id,
+						'aid': $scope.current_buisiness_edit.pk_int_address_id, 
+						'name': $scope.ng_name,
+						'namear': $scope.ng_name_ar, 
+						'pincode': $scope.ng_pincode,
+						'city': $scope.ng_city,
+						'statear': $scope.ng_state_ar,
+						'state': $scope.ng_state,
+						'mobile': $scope.ng_mobile,
+						'alt_mobile': $scope.ng_alt_mobile,
+						'email': $scope.ng_email,
+						'cat': $scope.ng_cat,
+						'locatn': $scope.ng_locatn,
+						'desc':$scope.ng_desc,
+						'descar':$scope.ng_desc_ar,
+						'lat':$scope.ng_lat,
+						'log':$scope.ng_log,
+						'opntime':$scope.ng_opn_time,
+						'clstime':$scope.ng_cls_time,
+						'weburl':$scope.ng_url,
+						'videolink':$scope.ng_video,
+						'stat':$scope.ng_stat,
+						'tag':strtag,
+						'featured':$scope.ng_featured,
+
+
+					};
+					var str_daa = JSON.stringify(daa);
+					for(var i = 0;i < fileInput.files.length;i++){
+						formData.append("image[]", fileInput.files[i]);
+					}
+					for(var i = 0;i < fileInput1.files.length;i++){
+						formData.append("pdf[]", fileInput1.files[0]);
+					}
+					formData.append("data",str_daa);                                
+					return formData;  
+				},  
+				data : $scope.form,
+				headers: {
+					'Content-Type': undefined
+				}
+			}).success(function(data){
+				alert(data);
+				$scope.initial();
+			});
+
+
+		}
+
+		$scope.get_Buisiness = function(){
+			console.log("get_Buisiness");
+			$scope.url = base_url+'select_Buisiness';
+			$scope.token = "token";
+			console.log("get_Buisiness");
+			$http.post($scope.url,{'token':$scope.token}).then(function(response){
+				$scope.buisiness = response.data;
+				$scope.vchr_image_name = "dummy.jpg";
+			}); 
+		}
+
 
 	$scope.get_category = function(){
-		var req = {
-			method: 'POST',
-			url: base_url+'select_category',
-			headers: {'Content-Type': undefined }
-		};
-		$http(req).then(function(response){
-// alert(JSON.stringify(response.data));
-$scope.category = response.data;
-}); 
+			console.log("get_category");
+
+			var req = {
+				method: 'POST',
+				url: base_url+'select_category',
+				headers: {'Content-Type': undefined }
+			};
+			$http(req).then(function(response){
+			// alert(JSON.stringify(response.data));
+			$scope.category = response.data;
+			}); 
 	}
+
 	$scope.get_location = function(){
 		var req = {
 			method: 'POST',
@@ -986,177 +1072,212 @@ $scope.category = response.data;
 			headers: {'Content-Type': undefined }
 		};
 		$http(req).then(function(response){
-// alert(JSON.stringify(response.data));
-$scope.location = response.data;
-}); 
-	}                                                
-	$scope.view_full = function(id) {
-		$scope.current_edit_img(id);
-		$scope.addbtn = false;
-		$scope.view = false;
-		$scope.add = false;
-		$scope.current_view = true;	
-		$scope.id = id;
-		$scope.url = base_url+'select_current_Buisiness';
-		$http.post($scope.url,{'id':$scope.id}).then(function(response){
-		// alert(JSON.stringify(response.data[0]));
-		$scope.current_buisiness = response.data[0];
-		$scope.openin = new Date($scope.current_buisiness.vchr_opn_time);
-		$scope.hour = $scope.openin.getHours($scope.current_buisiness.vchr_opn_time);
-		$scope.minute = $scope.openin.getMinutes($scope.current_buisiness.vchr_opn_time);
-		$scope.opening = JSON.stringify($scope.hour) + " : " + JSON.stringify($scope.minute);   
-
-		$scope.closin= new Date($scope.current_buisiness.vchr_cls_time);
-		$scope.hourc = $scope.closin.getHours($scope.current_buisiness.vchr_cls_time);
-		$scope.minutec = $scope.closin.getMinutes($scope.current_buisiness.vchr_cls_time);
-		$scope.closing = JSON.stringify($scope.hourc) + " : " + JSON.stringify($scope.minutec);  
-		$scope.get_Buisiness();
-});
+		// alert(JSON.stringify(response.data));
+		$scope.location = response.data;
+		}); 
 	}
 
 
+		$scope.view_full = function(id) {
+			console.log("view_full");
+			$scope.current_edit_img(id);
+			$scope.addbtn = false;
+			$scope.view = false;
+			$scope.add = false;
+			$scope.current_view = true;	
+			$scope.id = id;
+			$scope.url = base_url+'select_current_Buisiness';
+			$http.post($scope.url,{'id':$scope.id}).then(function(response){
+			// alert(JSON.stringify(response.data[0]));
+			$scope.current_buisiness = response.data[0];
+			console.log($scope.current_buisiness.int_isfeatured);
+			if ($scope.current_buisiness.int_isfeatured == 1){
+				$scope.current_buisiness.int_isfeatured = "Yes";
+			}
+			else{
+				$scope.current_buisiness.int_isfeatured = "No";
+			}
+			console.log($scope.current_buisiness.int_isfeatured);
+			
+			$scope.openin = new Date($scope.current_buisiness.vchr_opn_time);
+			$scope.hour = $scope.openin.getHours($scope.current_buisiness.vchr_opn_time);
+			$scope.minute = $scope.openin.getMinutes($scope.current_buisiness.vchr_opn_time);
+			$scope.opening = JSON.stringify($scope.hour) + " : " + JSON.stringify($scope.minute);   
 
-	$scope.current_edit = function(id){
-		$scope.current_edit_img(id);
-		$scope.addbtn = false;
-		$scope.view = false;
-		$scope.add = true;
-		$scope.current_view = false;
-		$scope.add_updt_btn = true;
-
-		$scope.id = id;
-		$scope.url = base_url+'select_current_Buisiness';
-// alert("select business");
-$http.post($scope.url,{'id':$scope.id}).then(function(response){
-// alert(JSON.stringify(response.data[0]));
-$scope.current_buisiness_edit = response.data[0];
-// alert(JSON.stringify($scope.current_buisiness_edit));
-$scope.ng_img = $scope.current_buisiness_edit.vchr_image_name;
-$scope.ng_pdf = $scope.current_buisiness_edit.vchr_pdf;
-
-$scope.ng_name = $scope.current_buisiness_edit.vchr_name;
-$scope.ng_name_ar = $scope.current_buisiness_edit.vchr_name_ar;
-$scope.ng_pincode = $scope.current_buisiness_edit.int_pincode;
-$scope.ng_city = $scope.current_buisiness_edit.vchr_city;
-$scope.ng_state = $scope.current_buisiness_edit.vchr_state;
-$scope.ng_state_ar = $scope.current_buisiness_edit.vchr_state_ar;
-$scope.ng_mobile = $scope.current_buisiness_edit.int_mobile;
-$scope.ng_alt_mobile = $scope.current_buisiness_edit.int_alt_mobile;
-$scope.ng_email = $scope.current_buisiness_edit.vchr_email;
-$scope.ng_cat= $scope.current_buisiness_edit.fk_int_category_id;
-$scope.ng_locatn = $scope.current_buisiness_edit.fk_int_location_id;
-$scope.ng_desc= $scope.current_buisiness_edit.text_description;
-$scope.ng_desc_ar= $scope.current_buisiness_edit.text_description_ar;
-$scope.ng_opn_time= new Date($scope.current_buisiness_edit.vchr_opn_time);
-$scope.ng_cls_time= new Date($scope.current_buisiness_edit.vchr_cls_time);
-$scope.ng_url= $scope.current_buisiness_edit.vchr_weburl;
-$scope.ng_video= $scope.current_buisiness_edit.vchr_video_link;
-$scope.ng_lat=$scope.current_buisiness_edit.float_lat;
-$scope.ng_log=$scope.current_buisiness_edit.float_log;
-$scope.ng_stat=$scope.current_buisiness_edit.vchr_status;
-console.log("lenght",$scope.tag)
-$scope.tag =  $scope.current_buisiness_edit.vchr_tag.split("-");
-console.log("lenght",$scope.tag)
-if ($scope.tag == ""){
-	$scope.tag=[]
-	console.log("re initialised")
-}
-
-$scope.addItem = function () {
-	$scope.errortext = "";
-	if (!$scope.addMe) {return;}
-	if ($scope.tag.indexOf($scope.addMe) == -1) {
-		$scope.tag.push($scope.addMe);
-		$scope.addMe = "";
-		console.log($scope.tag)
-	} else {
-		$scope.errortext = "The item is already in your shopping list.";
-	}
-	console.log($scope.tag.join('-'));
-	strtag = $scope.tag.join('-')
-}
-$scope.removeItem = function (x) {
-	$scope.errortext = "";    
-	$scope.tag.splice(x, 1);
-	console.log($scope.tag)
-	strtag = $scope.tag.join('-')
-}
-
-console.log($scope.ng_tag);
-
-
-});
-}
-$scope.delete_buisiness = function(bid,aid){
-	if(confirm("Are You Sure Want To Delete?")){
-		$scope.bid = bid;
-		$scope.aid = aid;
-		$scope.url = base_url+'delete_business';
-		$http.post($scope.url,{'aid':$scope.aid,'bid':$scope.bid}).then(function(response){
+			$scope.closin= new Date($scope.current_buisiness.vchr_cls_time);
+			$scope.hourc = $scope.closin.getHours($scope.current_buisiness.vchr_cls_time);
+			$scope.minutec = $scope.closin.getMinutes($scope.current_buisiness.vchr_cls_time);
+			$scope.closing = JSON.stringify($scope.hourc) + " : " + JSON.stringify($scope.minutec);  
 			$scope.get_Buisiness();
-		});
-	}
-}
-$scope.current_edit_img = function(id){
-	$scope.id = id;
-	$scope.url = base_url+'select_business_images';
-	$http.post($scope.url,{'id':$scope.id}).then(function(response){ 
-		$scope.ng_img_fully = response.data;
-
 	});
-}
-$scope.delete_buisiness_image = function(biid){
-//  alert(bid);
-if(confirm("Are You Sure Want To Delete?")){
-	$scope.biid = biid;
-	$scope.url = base_url+'delete_business_image';
-	$http.post($scope.url,{'biid':$scope.biid}).then(function(response){
-		$scope.initial();
-
-// alert(JSON.stringify(parseInt(response.data)));
-});
-}
-}
-$scope.edit_img_set = function(biid){
-	$scope.biid = biid;
-}
-$scope.edit_img_set_save = function(){
-
-	var fileInput_buiimg = document.getElementById('buiimg_upload');
-	$scope.url = base_url+'edit_bui_img';
-	$http({
-		method  : 'POST',
-		url     : $scope.url,
-		processData: false,
-		transformRequest: function (data) {
-			var formData = new FormData();
-			$scope.loading = false;
-			var daa={'biid':$scope.id,
-
-		};
-		var str_daa = JSON.stringify(daa);
-		for(var i = 0;i < fileInput_buiimg.files.length;i++){
-			formData.append("image[]", fileInput_buiimg.files[i]);
 		}
 
-		formData.append("data",str_daa);                                
-		return formData;  
-	},  
-	data : $scope.form,
-	headers: {
-		'Content-Type': undefined
+
+
+$scope.current_edit = function(id){
+	console.log("current_edit");
+
+	$scope.current_edit_img(id);
+	$scope.addbtn = false;
+	$scope.view = false;
+	$scope.add = true;
+	$scope.current_view = false;
+	$scope.add_updt_btn = true;
+
+	$scope.id = id;
+	$scope.url = base_url+'select_current_Buisiness';
+	// alert("select business");
+	$http.post($scope.url,{'id':$scope.id}).then(function(response){
+	// alert(JSON.stringify(response.data[0]));
+	$scope.current_buisiness_edit = response.data[0];
+	// alert(JSON.stringify($scope.current_buisiness_edit));
+	// console.log($scope.current_buisiness_edit);
+	$scope.ng_img = $scope.current_buisiness_edit.vchr_image_name;
+	$scope.ng_pdf = $scope.current_buisiness_edit.vchr_pdf;
+	$scope.ng_name = $scope.current_buisiness_edit.vchr_name;
+	$scope.ng_name_ar = $scope.current_buisiness_edit.vchr_name_ar;
+	$scope.ng_pincode = $scope.current_buisiness_edit.int_pincode;
+	$scope.ng_city = $scope.current_buisiness_edit.vchr_city;
+	$scope.ng_state = $scope.current_buisiness_edit.vchr_state;
+	$scope.ng_state_ar = $scope.current_buisiness_edit.vchr_state_ar;
+	$scope.ng_mobile = $scope.current_buisiness_edit.int_mobile;
+	$scope.ng_alt_mobile = $scope.current_buisiness_edit.int_alt_mobile;
+	$scope.ng_email = $scope.current_buisiness_edit.vchr_email;
+	$scope.ng_cat= $scope.current_buisiness_edit.fk_int_category_id;
+	$scope.ng_locatn = $scope.current_buisiness_edit.fk_int_location_id;
+	$scope.ng_desc= $scope.current_buisiness_edit.text_description;
+	$scope.ng_desc_ar= $scope.current_buisiness_edit.text_description_ar;
+	$scope.ng_opn_time= new Date($scope.current_buisiness_edit.vchr_opn_time);
+	$scope.ng_cls_time= new Date($scope.current_buisiness_edit.vchr_cls_time);
+	$scope.ng_url= $scope.current_buisiness_edit.vchr_weburl;
+	$scope.ng_video= $scope.current_buisiness_edit.vchr_video_link;
+	$scope.ng_lat=$scope.current_buisiness_edit.float_lat;
+	$scope.ng_log=$scope.current_buisiness_edit.float_log;
+
+	$scope.ng_stat=$scope.current_buisiness_edit.vchr_status;
+	$scope.ng_check_featured=$scope.current_buisiness_edit.int_isfeatured;
+
+	
+
+	console.log("featured : begins")
+	console.log("featured : chekc ",$scope.ng_check_featured)
+	$scope.isfeatured = "premium";
+	// $scope.ng_feat = ($scope.ng_check_featured === 1 ) ? true: false;
+
+	if ($scope.ng_check_featured == 1){
+		$scope.checkVal = true;
 	}
-}).success(function(data){
-	alert(data);
-	$scope.initial();
-});
-}
-$scope.filter = function() {
-	$timeout(function() {
-		$scope.filteredItems = $scope.filtered.length;
-	}, 10);
-};
-Map.init();
+	else{
+		$scope.checkVal = false;
+	}
+	console.log("feat ",typeof $scope.ng_featured );
+
+	$scope.tag =  $scope.current_buisiness_edit.vchr_tag.split("-");
+	// console.log("lenght",$scope.tag)
+	if ($scope.tag == ""){
+		$scope.tag=[]
+		// console.log("re initialised")
+	}
+
+	$scope.addItem = function () {
+		$scope.errortext = "";
+		if (!$scope.addMe) {return;}
+		if ($scope.tag.indexOf($scope.addMe) == -1) {
+			$scope.tag.push($scope.addMe);
+			$scope.addMe = "";
+			// console.log($scope.tag)
+		} else {
+			$scope.errortext = "you already added this tag.";
+		}
+		// console.log($scope.tag.join('-'));
+		strtag = $scope.tag.join('-')
+	}
+	$scope.removeItem = function (x) {
+		$scope.errortext = "";    
+		$scope.tag.splice(x, 1);
+		// console.log($scope.tag)
+		strtag = $scope.tag.join('-')
+	}
+
+	console.log($scope.ng_tag);
+
+
+	});
+	}
+	$scope.delete_buisiness = function(bid,aid){
+		console.log("delete_buisiness");
+
+		if(confirm("Are You Sure Want To Delete?")){
+			$scope.bid = bid;
+			$scope.aid = aid;
+			$scope.url = base_url+'delete_business';
+			$http.post($scope.url,{'aid':$scope.aid,'bid':$scope.bid}).then(function(response){
+				$scope.get_Buisiness();
+			});
+		}
+	}
+	$scope.current_edit_img = function(id){
+		console.log("current_edit_imgZ");
+
+		$scope.id = id;
+		$scope.url = base_url+'select_business_images';
+		$http.post($scope.url,{'id':$scope.id}).then(function(response){ 
+			$scope.ng_img_fully = response.data;
+
+		});
+	}
+	$scope.delete_buisiness_image = function(biid){
+	//  alert(bid);
+	if(confirm("Are You Sure Want To Delete?")){
+		$scope.biid = biid;
+		$scope.url = base_url+'delete_business_image';
+		$http.post($scope.url,{'biid':$scope.biid}).then(function(response){
+			$scope.initial();
+
+	// alert(JSON.stringify(parseInt(response.data)));
+	});
+	}
+	}
+	$scope.edit_img_set = function(biid){
+		$scope.biid = biid;
+	}
+	$scope.edit_img_set_save = function(){
+
+		var fileInput_buiimg = document.getElementById('buiimg_upload');
+		$scope.url = base_url+'edit_bui_img';
+		$http({
+			method  : 'POST',
+			url     : $scope.url,
+			processData: false,
+			transformRequest: function (data) {
+				var formData = new FormData();
+				$scope.loading = false;
+				var daa={'biid':$scope.id,
+
+			};
+			var str_daa = JSON.stringify(daa);
+			for(var i = 0;i < fileInput_buiimg.files.length;i++){
+				formData.append("image[]", fileInput_buiimg.files[i]);
+			}
+
+			formData.append("data",str_daa);                                
+			return formData;  
+		},  
+		data : $scope.form,
+		headers: {
+			'Content-Type': undefined
+		}
+	}).success(function(data){
+		alert(data);
+		$scope.initial();
+	});
+	}
+	$scope.filter = function() {
+		$timeout(function() {
+			$scope.filteredItems = $scope.filtered.length;
+		}, 10);
+	};
+	Map.init();
 });
 </script>
 </html>
