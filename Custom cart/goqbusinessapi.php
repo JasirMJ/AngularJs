@@ -547,7 +547,7 @@ public function add_Buisiness()
     }
   
 
-  echo 'Success : success, ';
+  echo 'Success : success';
   // echo 'Success : success, ',$insert_data;
   // $json_response = json_encode($insert_data, JSON_NUMERIC_CHECK);
   // echo $json_response;
@@ -1014,7 +1014,8 @@ public function select_Buisiness_with_type()
     JOIN ( SELECT * FROM tbl_location WHERE vchr_delete_status='n' ) tbl_location ON tbl_business.fk_int_location_id = tbl_location.pk_int_location_id
     JOIN ( SELECT * FROM tbl_category WHERE vchr_delete_status='n' ) tbl_category ON tbl_business.fk_int_category_id = tbl_category.pk_int_category_id
     JOIN ( SELECT * FROM tbl_address WHERE vchr_delete_status='n' ) tbl_address ON tbl_business.fk_int_address_id = tbl_address.pk_int_address_id 
-    left join (SELECT vchr_image_name,vchr_pdf,fk_int_business_id FROM tbl_business_images WHERE vchr_delete_status='n' group by fk_int_business_id) tbl_business_images on tbl_business.pk_int_business_id = tbl_business_images.fk_int_business_id
+    left join (SELECT vchr_image_name,vchr_pdf,fk_int_business_id FROM tbl_business_images WHERE vchr_delete_status='n' group by fk_int_business_id)
+    tbl_business_images on tbl_business.pk_int_business_id = tbl_business_images.fk_int_business_id
     WHERE tbl_business.vchr_delete_status='n' $condition  ORDER BY vchr_name");
 
 
@@ -1114,7 +1115,7 @@ public function select_current_Buisiness()
 
 public function select_category()
 {
-  $query = $this->db->query("SELECT pk_int_category_id,vchr_category_name,vchr_category_name_ar FROM tbl_category WHERE vchr_delete_status='n'");
+  $query = $this->db->query("SELECT pk_int_category_id,vchr_category_name,vchr_category_name_ar FROM tbl_category WHERE vchr_delete_status='n' order by  vchr_category_name");
   $result = $query->result();
   $json_response = json_encode($result, JSON_NUMERIC_CHECK);
   echo $json_response;
@@ -1129,6 +1130,8 @@ public function select_category()
 
 public function select_category_with_location()
 {
+
+  
   $post_data = file_get_contents('php://input');
   $data = json_decode($post_data);
   $token = $data->token;
@@ -1137,6 +1140,7 @@ public function select_category_with_location()
 
     $query = $this->db->query("
     SELECT 
+    pk_int_category_id,
     vchr_category_name,
     vchr_category_name_ar 
     FROM tbl_category 
@@ -1291,9 +1295,9 @@ public function delete_business()
 
   public function delete_enquiry()
   {
-      $user_id=123;
-      $dt = new DateTime();
-      $today= $dt->format('Y-m-d H:i:s');
+    $user_id=123;
+    $dt = new DateTime();
+    $today= $dt->format('Y-m-d H:i:s');
   $post_data = file_get_contents('php://input');
   $data = json_decode($post_data);
   $aid = $data->id;

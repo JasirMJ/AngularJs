@@ -658,7 +658,7 @@ app_Buisiness.controller('buisinessctrl', function($scope, $http, $filter, $time
 	$scope.buiimg_file = [];
 	$scope.buiimg_del = [];
 	$scope.buiimg_len = 0;  
-	$scope.ng_featured=true;
+	$scope.ng_featured=false;
 
 	$scope.place = {};
 
@@ -753,7 +753,7 @@ app_Buisiness.controller('buisinessctrl', function($scope, $http, $filter, $time
 		$scope.ng_log="";
 		$scope.ng_stat="";
 		$scope.tag=[];
-		$scope.ng_featured=true;
+		$scope.ng_featured=false;
 		$scope.isfeatured="premium";
 
 	}
@@ -819,7 +819,7 @@ app_Buisiness.controller('buisinessctrl', function($scope, $http, $filter, $time
 			alert("Closing time must be filled out");
 			return false;
 		}
-		console.log("ng_featured",$scope.ng_featured)
+		// alert("ng_featured",$scope.ng_featured)
 
 		if(cnt >= 3 && $scope.ng_featured ==1){
 			alert("Featured list full for the selected location ")
