@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js">
+          </script>
+     </head>
+     <body>  
+          <div class="container" ng-app="myapp" ng-controller="myController" ng-init="select()">  
+               <div class="col-md-4">  
+               <br><br><br>
+                    <div ng-init="load_data()">
+                         Fruits :
+                         <select  id="fruits" name="quarter" ng-model="select_data" ng-selected="select_data" ng-change="show()"
+                              ng-options="items.name for items in array_data" >
+                              <option value="" disabled>--select fruit--</option>
+                         {{items}}
+                         </select>
+                         selected id : {{selected_value}}  
+                    </div>
+                    <button ng-click="clear()">clear</button>
+               </div>
+          </div>
+     </body>
+</html>
+<script>  
+var app = angular.module("myapp", []);  
+app.controller("myController", function($scope, $http){ 
+     $scope.select_data = ''; 
+     
+     $scope.clear=function(){
+          console.log("cleared");
+          $scope.selected_value='None'
+          document.getElementById('fruits').value = "";
+     }
+     $scope.load_data=function(){
+          console.log("get_data worked");
+
+          var default_selected_id = 1 // provide a default selected value here
+
+          $scope.array_data = [
+               {"id":1,"name":"Apple"},
+               {"id":2,"name":"mango"},
+               {"id":3,"name":"banana"},
+               {"id":4,"name":"grape"}
+          ]
+
+          for(i=0;i<=$scope.array_data.length-1;i++){
+               if($scope.array_data[i].id==default_selected_id){
+                    $scope.select_data = $scope.array_data[i]; //this work
+               }
+          }
+          $scope.show()
+     }
+     $scope.show=function(){
+          
+          $scope.selected_value = $scope.select_data.id;
+          console.log($scope.selected_value)
+     }
+});  
+</script>  
